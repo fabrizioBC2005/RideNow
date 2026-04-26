@@ -1,13 +1,205 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RideNow — Tu viaje, cuando quieras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/home.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">Ride<span>Now</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#como-funciona">Cómo funciona</a></li>
+        <li><a href="#roles">Conductores</a></li>
+      </ul>
+      <div class="nav-btns">
+        <button class="btn-outline" onclick="window.location.href='login.html'">Iniciar sesión</button>
+        <button class="btn-primary" onclick="window.location.href='register.html'">Registrarse</button>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="badge-live">
+          <span class="live-dot"></span>
+          Conductores disponibles ahora
+        </div>
+        <h1>
+          Tu destino,<br>
+          <span class="text-outline">cuando</span><br>
+          quieras.
+        </h1>
+        <p class="hero-desc">
+          Solicita tu viaje en segundos. Conductores verificados,
+          rutas optimizadas y pagos seguros.
+        </p>
+        <div class="hero-cta">
+          <button class="btn-accent" onclick="window.location.href='register.html'">
+            Solicitar viaje →
+          </button>
+          <button class="btn-ghost" onclick="window.location.href='register.html'">
+            Ser conductor
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="ride-card">
+          <h3>¿A dónde vamos?</h3>
+          <div class="input-group">
+            <div class="input-row">
+              <span class="dot dot-green"></span>
+              <input type="text" id="origen" placeholder="Punto de origen..." oninput="calcularTarifa()">
+            </div>
+            <div class="divider-line"></div>
+            <div class="input-row">
+              <span class="dot dot-red"></span>
+              <input type="text" id="destino" placeholder="Destino..." oninput="calcularTarifa()">
+            </div>
+          </div>
+          <div class="fare-row">
+            <span class="fare-label">Tarifa estimada</span>
+            <span class="fare-value" id="fare">S/ —</span>
+          </div>
+          <button class="btn-request" id="btn-request" onclick="solicitarViaje()">
+            Buscar conductor
+          </button>
+        </div>
+
+        <div class="map-card">
+          <div class="map-grid-bg"></div>
+          <div class="map-road-h"></div>
+          <div class="map-road-v"></div>
+          <div class="map-pin pin-origin"></div>
+          <div class="map-pin pin-dest"></div>
+          <div class="map-car">🚗</div>
+          <div class="map-badge">📍 Chimbote, Áncash</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTADÍSTICAS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-num" data-target="1240">0</span><span class="stat-plus">+</span>
+        <p>Viajes completados</p>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="380">0</span>
+        <p>Conductores activos</p>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="487" data-decimal="true">0</span>
+        <p>Calificación promedio</p>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="4">0</span>
+        <p>Min. de espera promedio</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="section-inner">
+      <span class="section-tag">¿Cómo funciona?</span>
+      <h2>Simple. Rápido. Seguro.</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">👤</div>
+          <h4>Regístrate</h4>
+          <p>Crea tu cuenta como pasajero o conductor en menos de 2 minutos.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">📍</div>
+          <h4>Ingresa tu destino</h4>
+          <p>Escribe tu origen y destino. Verás el costo estimado al instante.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">🚗</div>
+          <h4>Conductor asignado</h4>
+          <p>El sistema busca al conductor más cercano disponible automáticamente.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon">⭐</div>
+          <h4>Viaja y califica</h4>
+          <p>Paga digital o en efectivo y califica tu experiencia al llegar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="section roles-section" id="roles">
+    <div class="section-inner">
+      <span class="section-tag">Únete a la plataforma</span>
+      <h2>Elige tu rol</h2>
+      <div class="roles-grid">
+        <div class="role-card role-passenger" onclick="window.location.href='register.html'">
+          <div class="role-deco">🧳</div>
+          <h3>Soy pasajero</h3>
+          <p>Movilízate de forma rápida, segura y cómoda.</p>
+          <ul class="role-features">
+            <li>✓ Solicita viajes en segundos</li>
+            <li>✓ Rastrea tu conductor en tiempo real</li>
+            <li>✓ Pago digital o en efectivo</li>
+            <li>✓ Califica tu experiencia</li>
+          </ul>
+          <button class="btn-role">Crear cuenta gratis</button>
+        </div>
+        <div class="role-card role-driver" onclick="window.location.href='register.html'">
+          <div class="role-deco">🚘</div>
+          <h3>Soy conductor</h3>
+          <p>Genera ingresos flexibles en tus propios horarios.</p>
+          <ul class="role-features">
+            <li>✓ Activa cuando quieras</li>
+            <li>✓ Acepta o rechaza viajes</li>
+            <li>✓ Cobra por cada viaje</li>
+            <li>✓ Panel de estadísticas propio</li>
+          </ul>
+          <button class="btn-role btn-role-dark">Ser conductor</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Ride<span>Now</span></div>
+      <p>© 2025 RideNow — Proyecto universitario. Desarrollado en Chimbote, Áncash.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/home.js"></script>
+</body>
+
 </html>
