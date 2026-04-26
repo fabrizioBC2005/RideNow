@@ -7,10 +7,10 @@ import ViajePage from './pages/ViajePage'
 function App() {
   return (
     <Routes>
-      <Route path="/"             element={<HomePage />} />
-      <Route path="/negocios"     element={<NegociosPage />} />
-      <Route path="/quienes-somos" element={<QuienesSomosPage />} />
-      <Route path="/viaje"        element={<ViajePage />} />
+      <Route path="/"               element={<HomePage />} />
+      <Route path="/negocios"       element={<NegociosPage />} />
+      <Route path="/quienes-somos"  element={<QuienesSomosPage />} />
+      <Route path="/viaje"          element={<ViajePage />} />
     </Routes>
   )
 }

@@ -2,35 +2,30 @@ export default function HeroSection() {
   return (
     <section id="hero">
 
-      {/* Split hero */}
-      <div className="grid grid-cols-2 min-h-[480px]">
+      {/* Hero — 1 col mobile, 2 col desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[400px]">
 
-        {/* Izquierda — negro */}
-        <div className="bg-night flex flex-col justify-center px-14 py-16">
-          <span className="tag-yellow mb-5">🚕 Lima · Perú</span>
-
-          <h1 className="text-6xl font-black text-white leading-none tracking-tighter mb-4">
+        {/* Izquierda */}
+        <div className="bg-night flex flex-col justify-center px-6 md:px-14 py-14">
+          <span className="tag-yellow mb-5 w-fit">🚕 Lima · Perú</span>
+          <h1 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4">
             La oportunidad<br />
             está en todas<br />
             <span className="text-yellow">partes.</span>
           </h1>
-
-          <p className="text-gray-500 text-base leading-relaxed max-w-sm mb-8">
-            Aprovecha al máximo tu tiempo en la carretera con la
-            plataforma de transporte que más crece en Lima.
+          <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-sm mb-8">
+            Aprovecha al máximo tu tiempo en la carretera con la plataforma de transporte que más crece en Lima.
           </p>
-
           <a href="/register" className="btn-yellow text-sm mb-4 w-fit">
             Regístrate como conductor →
           </a>
-
           <a href="/login" className="text-white text-sm font-medium underline underline-offset-4 w-fit hover:text-yellow transition-colors">
             Inicia sesión
           </a>
         </div>
 
-        {/* Derecha — amarillo con ilustración */}
-        <div className="bg-yellow flex items-end justify-center overflow-hidden relative">
+        {/* Derecha — oculta en mobile, visible en desktop */}
+        <div className="hidden md:flex bg-yellow items-end justify-center overflow-hidden relative min-h-[400px]">
           <svg viewBox="0 0 400 460" width={400} height={460} className="absolute bottom-0">
             <ellipse cx="200" cy="500" rx="230" ry="210" fill="#e6b800" />
             <ellipse cx="200" cy="370" rx="115" ry="75" fill="#0a0a0a" />
@@ -56,13 +51,13 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Stats bar */}
-      <div className="grid grid-cols-3">
-        <div className="stat-block bg-night border-r-2 border-night-4">
+      {/* Stats — 1 col mobile, 3 col desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="stat-block bg-night border-b md:border-b-0 md:border-r-2 border-night-4">
           <div className="stat-value text-yellow">12,000+</div>
           <div className="stat-label text-gray-500">Viajes completados en Lima</div>
         </div>
-        <div className="stat-block bg-yellow border-r-2 border-yellow-dark">
+        <div className="stat-block bg-yellow border-b md:border-b-0 md:border-r-2 border-yellow-dark">
           <div className="stat-value text-night">4.9 ★</div>
           <div className="stat-label text-night font-semibold">Calificación promedio</div>
         </div>
