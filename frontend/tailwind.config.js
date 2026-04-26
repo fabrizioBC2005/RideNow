@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -18,13 +21,6 @@ export default {
           3:       '#1a1a1a',
           4:       '#222222',
         },
-      },
-      fontSize: {
-        '7xl': ['4.5rem', { lineHeight: '1' }],
-      },
-      letterSpacing: {
-        tightest: '-0.1em',
-        tighter2: '-0.06em',
       },
     },
   },
