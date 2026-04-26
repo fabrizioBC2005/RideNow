@@ -1,30 +1,39 @@
+import { LuMapPin, LuArrowRight, LuStar, LuUsers } from "react-icons/lu";
+import { FaCarSide } from "react-icons/fa";
+
 export default function HeroSection() {
   return (
-    <section id="hero">
+    <section id="hero" className="w-full">
 
-      {/* Hero — 1 col mobile, 2 col desktop */}
-      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[400px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[500px]">
 
-        {/* Izquierda */}
         <div className="bg-night flex flex-col justify-center px-6 md:px-14 py-14">
-          <span className="tag-yellow mb-5 w-fit">🚕 Lima · Perú</span>
+          <span className="tag-yellow mb-5 w-fit flex items-center gap-2">
+            <LuMapPin className="text-night" /> Lima · Perú
+          </span>
+          
           <h1 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4">
             La oportunidad<br />
             está en todas<br />
             <span className="text-yellow">partes.</span>
           </h1>
+          
           <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-sm mb-8">
             Aprovecha al máximo tu tiempo en la carretera con la plataforma de transporte que más crece en Lima.
           </p>
-          <a href="/register" className="btn-yellow text-sm mb-4 w-fit">
-            Regístrate como conductor →
-          </a>
-          <a href="/login" className="text-white text-sm font-medium underline underline-offset-4 w-fit hover:text-yellow transition-colors">
-            Inicia sesión
-          </a>
+          
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <a href="/register" className="btn-yellow text-sm w-fit flex items-center gap-2 group">
+              Regístrate como conductor 
+              <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </a>
+            
+            <a href="/login" className="text-white text-sm font-medium underline underline-offset-4 hover:text-yellow transition-colors">
+              Inicia sesión
+            </a>
+          </div>
         </div>
 
-        {/* Derecha — oculta en mobile, visible en desktop */}
         <div className="hidden md:flex bg-yellow items-end justify-center overflow-hidden relative min-h-[400px]">
           <svg viewBox="0 0 400 460" width={400} height={460} className="absolute bottom-0">
             <ellipse cx="200" cy="500" rx="230" ry="210" fill="#e6b800" />
@@ -51,21 +60,31 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Stats — 1 col mobile, 3 col desktop */}
       <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="stat-block bg-night border-b md:border-b-0 md:border-r-2 border-night-4">
-          <div className="stat-value text-yellow">12,000+</div>
+        <div className="stat-block bg-night border-b md:border-b-0 md:border-r-2 border-white/10 flex flex-col items-center md:items-start">
+          <div className="flex items-center gap-2 text-yellow mb-1">
+            <FaCarSide className="text-xl" />
+            <span className="stat-value">12,000+</span>
+          </div>
           <div className="stat-label text-gray-500">Viajes completados en Lima</div>
         </div>
-        <div className="stat-block bg-yellow border-b md:border-b-0 md:border-r-2 border-yellow-dark">
-          <div className="stat-value text-night">4.9 ★</div>
+
+        <div className="stat-block bg-yellow border-b md:border-b-0 md:border-r-2 border-black/10 flex flex-col items-center md:items-start">
+          <div className="flex items-center gap-2 text-night mb-1">
+            <LuStar className="text-xl fill-night" />
+            <span className="stat-value">4.9</span>
+          </div>
           <div className="stat-label text-night font-semibold">Calificación promedio</div>
         </div>
-        <div className="stat-block bg-white">
-          <div className="stat-value text-night">340+</div>
+
+        <div className="stat-block bg-white flex flex-col items-center md:items-start">
+          <div className="flex items-center gap-2 text-night mb-1">
+            <LuUsers className="text-xl" />
+            <span className="stat-value">340+</span>
+          </div>
           <div className="stat-label text-gray-500">Conductores activos hoy</div>
         </div>
       </div>
     </section>
-  )
+  );
 }

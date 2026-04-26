@@ -32,14 +32,12 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 z-50">
 
-        {/* Barra negra */}
         <div className={`flex items-center justify-between px-5 md:px-8 h-14 bg-night ${scrolled ? 'border-b border-night-4' : ''}`}>
 
           <Link to="/" className="text-yellow text-xl font-black tracking-tight no-underline">
             Ride<span className="text-white">Now</span>
           </Link>
 
-          {/* Links desktop */}
           <nav className="hidden md:flex items-center gap-6">
             {TOP_LINKS.map(l => (
               <Link key={l.label} to={l.href}
@@ -49,7 +47,6 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTAs desktop */}
           <div className="hidden md:flex items-center gap-4">
             <Link to="/login" className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">
               Iniciar sesión
@@ -59,7 +56,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Hamburguesa mobile */}
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden bg-transparent border-none cursor-pointer text-yellow p-1"
@@ -68,7 +64,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Sub barra — solo desktop */}
         <div className="hidden md:flex items-center justify-between px-8 h-12 bg-white border-b-2 border-yellow">
           <span className="text-night font-extrabold text-sm">Conduce</span>
           <div className="flex items-center gap-5">
@@ -81,7 +76,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Menú mobile desplegable */}
         <div className={`md:hidden bg-night border-b-2 border-yellow overflow-hidden transition-all duration-300 ${open ? 'max-h-screen' : 'max-h-0'}`}>
           <div className="px-5 py-4">
             {TOP_LINKS.map(l => (
@@ -104,7 +98,6 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Spacer — mobile solo 1 barra, desktop 2 barras */}
       <div className="h-14 md:h-28" />
     </>
   )
