@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Footer from './Footer'
 
 const FAQS = [
   { q: '¿Puedo conducir con RideNow en mi ciudad?',  a: 'RideNow opera actualmente en Lima Metropolitana. Regístrate y te avisaremos cuando lleguemos a tu zona.' },
@@ -69,17 +70,7 @@ export default function FAQSection() {
           </svg>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-night px-6 md:px-14 py-6 flex flex-col md:flex-row justify-between items-center gap-4 border-t-2 border-yellow">
-        <span className="text-yellow text-lg font-black">RideNow</span>
-        <div className="flex flex-wrap justify-center gap-4">
-          {['Privacidad', 'Términos', 'Ayuda', 'Contacto'].map(l => (
-            <a key={l} href="#" className="text-gray-600 text-xs no-underline hover:text-yellow transition-colors">{l}</a>
-          ))}
-        </div>
-        <span className="text-gray-700 text-xs">© 2025 RideNow · Lima, Perú</span>
-      </footer>
+      <Footer/>
     </section>
   )
 }

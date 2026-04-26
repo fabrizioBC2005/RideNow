@@ -1,3 +1,4 @@
+import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { MapPin, Clock, Star, Shield, ArrowRight, CreditCard } from 'lucide-react'
 
@@ -161,17 +162,7 @@ export default function ViajePage() {
                         Empezar ahora <ArrowRight size={16} />
                     </a>
                 </div>
-
-                {/* FOOTER */}
-                <footer className="bg-night px-14 py-7 flex flex-col md:flex-row justify-between items-center gap-4 border-t-2 border-yellow">
-                    <span className="text-yellow text-lg font-black">RideNow</span>
-                    <div className="flex gap-5">
-                        {['Privacidad', 'Términos', 'Ayuda', 'Contacto'].map(l => (
-                            <a key={l} href="#" className="text-gray-600 text-xs no-underline hover:text-yellow transition-colors">{l}</a>
-                        ))}
-                    </div>
-                    <span className="text-gray-700 text-xs">© 2025 RideNow · Lima, Perú</span>
-                </footer>
+                <Footer/>
             </main>
         </>
     )
