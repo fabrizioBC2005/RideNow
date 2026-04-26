@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 
 const TOP_LINKS = [
-  { label: 'Viaje',          href: '#' },
+  { label: 'Viaje',          href: '/viaje' },
   { label: 'Conduce',        href: '#drivers' },
-  { label: 'Negocios',       href: '#' },
-  { label: 'Quiénes somos',  href: '#' },
+  { label: 'Negocios',       href: '/negocios' },
+  { label: 'Quiénes somos',  href: '/quienes-somos' },
 ]
 
 const SUB_LINKS = [
@@ -18,7 +19,7 @@ const SUB_LINKS = [
 ]
 
 export default function Navbar() {
-  const [open, setOpen]       = useState(false)
+  const [open, setOpen]         = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -34,26 +35,26 @@ export default function Navbar() {
         {/* Barra negra superior */}
         <div className={`flex items-center justify-between px-8 h-14 bg-night transition-all duration-200 ${scrolled ? 'border-b border-night-4' : ''}`}>
 
-          <a href="/" className="text-yellow text-xl font-black tracking-tight no-underline">
+          <Link to="/" className="text-yellow text-xl font-black tracking-tight no-underline">
             Ride<span className="text-white">Now</span>
-          </a>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-6">
             {TOP_LINKS.map(l => (
-              <a key={l.label} href={l.href}
+              <Link key={l.label} to={l.href}
                 className="text-gray-400 text-sm font-medium no-underline hover:text-yellow transition-colors duration-150">
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
-            <a href="/login" className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">
+            <Link to="/login" className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">
               Iniciar sesión
-            </a>
-            <a href="/register" className="btn-yellow text-sm py-2 px-5">
+            </Link>
+            <Link to="/register" className="btn-yellow text-sm py-2 px-5">
               Regístrate
-            </a>
+            </Link>
           </div>
 
           <button onClick={() => setOpen(!open)}
@@ -78,21 +79,26 @@ export default function Navbar() {
         {/* Menú mobile */}
         <div className={`md:hidden bg-night border-b-2 border-yellow overflow-hidden transition-all duration-300 ${open ? 'max-h-screen' : 'max-h-0'}`}>
           <div className="px-6 py-4">
-            {[...TOP_LINKS, ...SUB_LINKS].map(l => (
+            {TOP_LINKS.map(l => (
+              <Link key={l.label} to={l.href} onClick={() => setOpen(false)}
+                className="block py-3 text-gray-400 text-sm font-medium border-b border-night-4 no-underline hover:text-yellow last:border-0">
+                {l.label}
+              </Link>
+            ))}
+            {SUB_LINKS.map(l => (
               <a key={l.label} href={l.href} onClick={() => setOpen(false)}
                 className="block py-3 text-gray-400 text-sm font-medium border-b border-night-4 no-underline hover:text-yellow last:border-0">
                 {l.label}
               </a>
             ))}
             <div className="pt-3 flex flex-col gap-2">
-              <a href="/login"   className="btn-ghost justify-center">Iniciar sesión</a>
-              <a href="/register" className="btn-yellow justify-center">Regístrate</a>
+              <Link to="/login"    className="btn-ghost justify-center">Iniciar sesión</Link>
+              <Link to="/register" className="btn-yellow justify-center">Regístrate</Link>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Espaciado fijo */}
       <div className="h-28" />
     </>
   )
