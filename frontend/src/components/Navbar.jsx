@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react'
 
 const TOP_LINKS = [
   { label: 'Viaje',         href: '/viaje' },
-  { label: 'Conduce',       href: '#drivers' },
+  { label: 'Reserva',       href: '/reserva' },
   { label: 'Negocios',      href: '/negocios' },
   { label: 'Quiénes somos', href: '/quienes-somos' },
 ]

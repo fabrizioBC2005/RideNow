@@ -5,6 +5,7 @@ import QuienesSomosPage from './pages/QuienesSomosPage'
 import ViajePage from './pages/ViajePage'
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ReservaViajePage from './pages/ReservaViajePage'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Route path="/viaje"          element={<ViajePage />} />
       <Route path="/login"          element={<Login />} />
       <Route path="/register"       element={<Register />} />
+      <Route path="/reserva"        element={<ReservaViajePage />} />
       
     </Routes>
   )
