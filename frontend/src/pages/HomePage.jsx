@@ -4,6 +4,7 @@ import EarningsSection from '../components/EarningsSection'
 import RequirementsSection from '../components/RequirementsSection'
 import FAQSection from '../components/FAQSection'
 import ContactoPage from './ContactoPage';
+import Testimonios from '../components/Testimonios';
 
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
         <EarningsSection />
         <RequirementsSection />
         <FAQSection />
+        <Testimonios />
         <ContactoPage />
 
 
