@@ -6,6 +6,7 @@ import ViajePage from './pages/ViajePage'
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+
 function App() {
   return (
     <Routes>
@@ -15,6 +16,7 @@ function App() {
       <Route path="/viaje"          element={<ViajePage />} />
       <Route path="/login"          element={<Login />} />
       <Route path="/register"       element={<Register />} />
+      
     </Routes>
   )
 }
