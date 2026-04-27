@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { ArrowRight, Clock, Calendar, MapPin } from 'lucide-react'
@@ -28,84 +29,138 @@ const USOS = [
 ]
 
 export default function ReservaViajePage() {
+  const [origen, setOrigen] = useState('')
+  const [destino, setDestino] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [hora, setHora] = useState('')
+  const [historial, setHistorial] = useState([])
+
+  const mapaURL = destino
+    ? `https://www.google.com/maps?q=${encodeURIComponent(origen + ' a ' + destino)}&output=embed`
+    : `https://www.google.com/maps?q=${encodeURIComponent(origen || 'Lima, Peru')}&output=embed`
+
+  const handleReserva = () => {
+    if (!origen || !destino || !fecha || !hora) return
+
+    const nuevaReserva = {
+      origen,
+      destino,
+      fecha,
+      hora,
+    }
+
+    setHistorial([nuevaReserva, ...historial])
+
+    alert('Reserva creada con éxito ✔️')
+  }
+
   return (
     <>
       <Navbar />
       <main>
 
-
         {/* HERO */}
-        <div className="bg-night px-8 md:px-14 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <div className="bg-night px-8 md:px-14 py-20 grid md:grid-cols-2 gap-12">
+
+          {/* FORM */}
           <div>
             <span className="tag-yellow mb-5 inline-block">Reserva tu viaje</span>
-            <h1 className="text-5xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4">
-              Planifica tu viaje<br />
-              <span className="text-yellow">con anticipación.</span>
+
+            <h1 className="text-5xl font-black text-white mb-4">
+              Planifica tu viaje <span className="text-yellow">con anticipación</span>
             </h1>
-            <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-md">
+
+            <p className="text-gray-500 mb-6">
               Programa tu viaje con fecha y hora exacta. Ideal para compromisos importantes
               donde no puedes fallar.
             </p>
-            <a href="/register" className="btn-yellow text-sm">
-              Reservar ahora <ArrowRight size={16} />
-            </a>
-          </div>
-          
 
-          {/* FORMULARIO */}
-          <div className="bg-night-2 border border-night-4 rounded-2xl p-6">
-            <p className="text-yellow text-xs font-extrabold uppercase tracking-widest mb-4">
-              Programa tu viaje
-            </p>
+            <div className="bg-night-2 border border-night-4 rounded-2xl p-6">
 
-            {/* Origen */}
-            <div className="flex items-center gap-3 bg-night-3 rounded-xl px-4 py-3 mb-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-green-400 flex-shrink-0" />
+              {/* ORIGEN */}
               <input
-                type="text"
+                className="w-full mb-3 bg-night-3 p-3 rounded-xl text-sm text-gray-300"
                 placeholder="Punto de origen"
-                className="bg-transparent text-sm text-gray-300 placeholder-gray-600 outline-none flex-1 font-sans"
+                value={origen}
+                onChange={(e) => setOrigen(e.target.value)}
               />
-            </div>
 
-            {/* Destino */}
-            <div className="flex items-center gap-3 bg-night-3 rounded-xl px-4 py-3 mb-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow flex-shrink-0" />
+              {/* DESTINO */}
               <input
-                type="text"
+                className="w-full mb-3 bg-night-3 p-3 rounded-xl text-sm text-gray-300"
                 placeholder="Punto de destino"
-                className="bg-transparent text-sm text-gray-300 placeholder-gray-600 outline-none flex-1 font-sans"
+                value={destino}
+                onChange={(e) => setDestino(e.target.value)}
               />
+
+              <div className="flex gap-2 mb-4">
+                <input
+                  type="date"
+                  className="flex-1 bg-night-3 p-3 rounded-xl text-sm text-gray-300"
+                  onChange={(e) => setFecha(e.target.value)}
+                />
+                <input
+                  type="time"
+                  className="flex-1 bg-night-3 p-3 rounded-xl text-sm text-gray-300"
+                  onChange={(e) => setHora(e.target.value)}
+                />
+              </div>
+
+              <button
+                onClick={handleReserva}
+                className="btn-yellow w-full text-sm"
+              >
+                Confirmar reserva <ArrowRight size={16} />
+              </button>
             </div>
 
-            {/* Fecha */}
-            <div className="flex items-center gap-3 bg-night-3 rounded-xl px-4 py-3 mb-3">
-              <input
-                type="date"
-                className="bg-transparent text-sm text-gray-300 outline-none flex-1 font-sans"
-              />
-            </div>
+            {origen && destino && fecha && hora && (
+              <div className="mt-6 bg-night-2 border border-night-4 rounded-xl p-4">
+                <h3 className="text-yellow font-bold mb-2">Resumen de reserva</h3>
+                <p className="text-xs text-gray-400">Origen: {origen}</p>
+                <p className="text-xs text-gray-400">Destino: {destino}</p>
+                <p className="text-xs text-gray-400">Fecha: {fecha}</p>
+                <p className="text-xs text-gray-400">Hora: {hora}</p>
+              </div>
+            )}
+          </div>
 
-            {/* Hora */}
-            <div className="flex items-center gap-3 bg-night-3 rounded-xl px-4 py-3 mb-4">
-              <input
-                type="time"
-                className="bg-transparent text-sm text-gray-300 outline-none flex-1 font-sans"
-              />
-            </div>
-
-            <a href="/register" className="btn-yellow w-full justify-center text-sm">
-              Confirmar reserva <ArrowRight size={15} />
-            </a>
-
-            <p className="text-gray-600 text-xs text-center mt-3">
-              Programa tu viaje con anticipación · Sin compromiso
-            </p>
+          {/* MAPA */}
+          <div className="rounded-2xl overflow-hidden border border-night-4 h-[520px]">
+            <iframe
+              title="mapa"
+              src={mapaURL}
+              className="w-full h-full"
+            />
           </div>
         </div>
 
+        {/* HISTORIAL */}
+          <div className="bg-yellow px-8 md:px-14 py-8">
+           <span className="tag-black mb-6 inline-block">
+           Historial de reservas
+          </span>
+          
+          {historial.length === 0 ? (
+            <p className="text-black-400 text-sm">
+              Aún no tienes reservas.
+            </p>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-4">
+              {historial.map((h, i) => (
+                <div key={i} className="card-dark p-4">
+                  <p className="text-xs text-gray-400">Origen: {h.origen}</p>
+                  <p className="text-xs text-gray-400">Destino: {h.destino}</p>
+                  <p className="text-xs text-gray-400">Fecha: {h.fecha}</p>
+                  <p className="text-xs text-gray-400">Hora: {h.hora}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* BENEFICIOS */}
-        <div className="bg-white px-8 md:px-14 py-16">
+     <div className="bg-white px-8 md:px-14 py-16">
           <span className="tag-black mb-4 inline-block">Ventajas</span>
           <h2 className="text-4xl font-black text-night tracking-tight mt-3 mb-2">
             ¿Por qué reservar tu viaje?
@@ -117,10 +172,10 @@ export default function ReservaViajePage() {
           <div className="grid md:grid-cols-3 gap-4">
             {BENEFICIOS.map(b => (
               <div key={b.title} className="card-dark flex gap-4 items-start">
-                <div className="icon-yellow flex-shrink-0 text-night">{b.icon}</div>
+                <div className="icon-yellow">{b.icon}</div>
                 <div>
-                  <div className="text-sm font-bold text-white mb-1">{b.title}</div>
-                  <div className="text-xs text-gray-600 leading-relaxed">{b.desc}</div>
+                  <div className="text-white font-bold">{b.title}</div>
+                  <div className="text-xs text-gray-500">{b.desc}</div>
                 </div>
               </div>
             ))}
@@ -136,14 +191,15 @@ export default function ReservaViajePage() {
 
           <div className="flex flex-wrap gap-3">
             {USOS.map(u => (
-              <span key={u} className="bg-night-2 border border-night-4 text-yellow text-xs font-bold px-4 py-2 rounded-md">
+              <span key={u} className="bg-night-2 px-4 py-2 text-yellow text-xs rounded-md">
                 {u}
               </span>
             ))}
           </div>
         </div>
 
-        {/* CTA */}
+        
+
         <div className="bg-yellow px-8 md:px-14 py-16 text-center">
           <h2 className="text-4xl font-black text-night tracking-tight mb-4">
             Programa tu próximo viaje hoy
@@ -155,7 +211,6 @@ export default function ReservaViajePage() {
             Reservar viaje <ArrowRight size={16} />
           </a>
         </div>
-
         <Footer />
       </main>
     </>
