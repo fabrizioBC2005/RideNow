@@ -15,7 +15,9 @@ const SUB_LINKS = [
   { label: 'Ganancias',       href: '#earnings' },
   { label: 'Tu primer viaje', href: '#how' },
   { label: 'Seguridad',       href: '#safety' },
-  { label: 'Contáctanos',     href: '#' },
+  {label: 'Opiniones', href: '/#testimonios' },
+  { label: 'Contáctanos',     href: '/#contacto' },
+  
 ]
 
 export default function Navbar() {
