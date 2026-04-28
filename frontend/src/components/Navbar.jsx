@@ -10,13 +10,12 @@ const TOP_LINKS = [
 ]
 
 const SUB_LINKS = [
-  { label: 'Regístrate',      href: '#' },
-  { label: 'Requisitos',      href: '#requirements' },
-  { label: 'Ganancias',       href: '#earnings' },
-  { label: 'Tu primer viaje', href: '#how' },
-  { label: 'Seguridad',       href: '#safety' },
-  {label: 'Opiniones', href: '/#testimonios' },
-  { label: 'Contáctanos',     href: '/#contacto' },
+  { label: 'Regístrate',      href: '/conduce/registrate' },
+  { label: 'Requisitos',      href: '/conduce/requisitos' },
+  { label: 'Ganancias',       href: '/conduce/ganancias' },
+  { label: 'Tu primer viaje', href: '/conduce/primer-viaje' },
+  { label: 'Seguridad',       href: '/conduce/seguridad' },
+  { label: 'Contáctanos',     href: '/conduce/contactanos' },
   
 ]
 
