@@ -3,20 +3,21 @@ import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 
 const TOP_LINKS = [
-  { label: 'Viaje',         href: '/viaje' },
-  { label: 'Reserva',       href: '/reserva' },
-  { label: 'Negocios',      href: '/negocios' },
+  { label: 'Viaje', href: '/viaje' },
+  { label: 'Reserva', href: '/reserva' },
+  { label: 'Negocios', href: '/negocios' },
   { label: 'Quiénes somos', href: '/quienes-somos' },
+  { label: 'Testimonios', href: '/testimonios' }
 ]
 
 const SUB_LINKS = [
-  { label: 'Regístrate',      href: '/conduce/registrate' },
-  { label: 'Requisitos',      href: '/conduce/requisitos' },
-  { label: 'Ganancias',       href: '/conduce/ganancias' },
+  { label: 'Regístrate', href: '/conduce/registrate' },
+  { label: 'Requisitos', href: '/conduce/requisitos' },
+  { label: 'Ganancias', href: '/conduce/ganancias' },
   { label: 'Tu primer viaje', href: '/conduce/primer-viaje' },
-  { label: 'Seguridad',       href: '/conduce/seguridad' },
-  { label: 'Contáctanos',     href: '/conduce/contactanos' },
-  
+  { label: 'Seguridad', href: '/conduce/seguridad' },
+  { label: 'Contáctanos', href: '/conduce/contactanos' },
+
 ]
 
 export default function Navbar() {
@@ -92,7 +93,7 @@ export default function Navbar() {
               </a>
             ))}
             <div className="pt-4 flex flex-col gap-2">
-              <Link to="/login"    className="btn-ghost justify-center text-sm">Iniciar sesión</Link>
+              <Link to="/login" className="btn-ghost justify-center text-sm">Iniciar sesión</Link>
               <Link to="/register" className="btn-yellow justify-center text-sm">Regístrate</Link>
             </div>
           </div>
