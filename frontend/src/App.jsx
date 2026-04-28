@@ -5,6 +5,14 @@ import QuienesSomosPage from './pages/QuienesSomosPage'
 import ViajePage from './pages/ViajePage'
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ReservaViajePage from './pages/ReservaViajePage'
+import RegistratePage from "./pages/conduce/RegistratePage";
+import RequisitosPage from "./pages/conduce/RequisitosPage";
+import GananciasPage from "./pages/conduce/GananciasPage";
+import PrimerViajePage from "./pages/conduce/PrimerViajePage";
+import SeguridadPage from "./pages/conduce/SeguridadPage";
+import ContactanosPage from "./pages/conduce/ContactanosPage";
+
 
 function App() {
   return (
@@ -15,6 +23,14 @@ function App() {
       <Route path="/viaje"          element={<ViajePage />} />
       <Route path="/login"          element={<Login />} />
       <Route path="/register"       element={<Register />} />
+      <Route path="/reserva"        element={<ReservaViajePage />} />
+      <Route path="/conduce/registrate" element={<RegistratePage />} />
+      <Route path="/conduce/requisitos" element={<RequisitosPage />} />
+      <Route path="/conduce/ganancias" element={<GananciasPage />} />
+      <Route path="/conduce/primer-viaje" element={<PrimerViajePage />} />
+      <Route path="/conduce/seguridad" element={<SeguridadPage />} />
+      <Route path="/conduce/contactanos" element={<ContactanosPage />} />
+      
     </Routes>
   )
 }
