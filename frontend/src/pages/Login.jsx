@@ -33,7 +33,7 @@ export default function LoginPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-night min-h-screen flex items-center justify-center p-6">
+      <main className="bg-night-2 min-h-screen flex items-center justify-center p-6">
         <div className="w-full max-w-[400px] bg-[#111] border border-white/5 rounded-[2rem] p-8 md:p-10 shadow-2xl">
           
           <div className="mb-8">
