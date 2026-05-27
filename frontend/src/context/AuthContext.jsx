@@ -1,10 +1,10 @@
-// ============================================
-//  RideNow — Contexto global de autenticación
+﻿// ============================================
+//  RideNow â€” Contexto global de autenticaciÃ³n
 // ============================================
 import { createContext, useContext, useState, useEffect } from "react";
 import { authApi } from "../api/auth.api";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Hook para usar el contexto fácilmente
+// Hook para usar el contexto fÃ¡cilmente
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth debe usarse dentro de <AuthProvider>");
