@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Star, Quote } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const Testimonios = () => {
   const reseñas = [
@@ -28,15 +27,6 @@ const Testimonios = () => {
   return (
     <section id="testimonios" className="py-24 bg-black border-t border-yellow-500/10">
       <div className="max-w-6xl mx-auto px-6">
-        {/* BOTÓN DE REGRESO */}
-        <div className="mb-6">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-medium transition-colors"
-          >
-            <span className="text-xl">←</span> Volver al inicio
-          </Link>
-        </div>
         {/* Cabecera de la sección */}
         <div className="text-center mb-16">
           <h2 className="text-yellow-400 font-bold uppercase tracking-widest mb-4">Comunidad RideNow</h2>
@@ -54,7 +44,7 @@ const Testimonios = () => {
           {reseñas.map((item, index) => (
             <div key={index} className="bg-neutral-900 p-8 rounded-3xl border border-white/5 relative group hover:border-yellow-400/50 transition-all duration-300">
               <Quote className="absolute top-6 right-8 text-yellow-400/10 group-hover:text-yellow-400/20 transition-colors" size={50} />
-
+              
               <div className="flex mb-4">
                 {[...Array(item.estrellas)].map((_, i) => (
                   <Star key={i} size={16} fill="#facc15" className="text-yellow-400" />
