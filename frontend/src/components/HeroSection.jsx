@@ -5,30 +5,30 @@ export default function HeroSection() {
   return (
     <section id="hero" className="w-full">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[500px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[520px] gap-8">
 
-        <div className="bg-night flex flex-col justify-center px-6 md:px-14 py-14">
-          <span className="tag-yellow mb-5 w-fit flex items-center gap-2">
+        <div className="bg-night flex flex-col justify-center px-6 md:px-14 py-16 text-center md:text-left">
+          <span className="tag-yellow mb-5 inline-flex items-center gap-2">
             <LuMapPin className="text-night" /> Lima · Perú
           </span>
           
-          <h1 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-snug md:leading-tight tracking-tighter mb-4">
             La oportunidad<br />
             está en todas<br />
             <span className="text-yellow">partes.</span>
           </h1>
           
-          <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-sm mb-8">
+          <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-lg mx-auto md:mx-0 mb-8">
             Aprovecha al máximo tu tiempo en la carretera con la plataforma de transporte que más crece en Lima.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <a href="/register" className="btn-yellow text-sm w-fit flex items-center gap-2 group">
+          <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start justify-center md:justify-start">
+            <a href="/register" className="btn-yellow text-sm w-full sm:w-auto justify-center flex items-center gap-2 group">
               Regístrate como conductor 
               <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
             </a>
             
-            <a href="/login" className="text-white text-sm font-medium underline underline-offset-4 hover:text-yellow transition-colors">
+            <a href="/login" className="text-white text-sm font-medium underline underline-offset-4 hover:text-yellow transition-colors w-full sm:w-auto text-center">
               Inicia sesión
             </a>
           </div>
@@ -60,8 +60,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="stat-block bg-night border-b md:border-b-0 md:border-r-2 border-white/10 flex flex-col items-center md:items-start">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="stat-block bg-night border-b md:border-b-0 md:border-r-2 border-white/10 flex flex-col items-center md:items-start px-6 py-8">
           <div className="flex items-center gap-2 text-yellow mb-1">
             <FaCarSide className="text-xl" />
             <span className="stat-value">12,000+</span>
@@ -69,7 +69,7 @@ export default function HeroSection() {
           <div className="stat-label text-gray-500">Viajes completados en Lima</div>
         </div>
 
-        <div className="stat-block bg-yellow border-b md:border-b-0 md:border-r-2 border-black/10 flex flex-col items-center md:items-start">
+        <div className="stat-block bg-yellow border-b md:border-b-0 md:border-r-2 border-black/10 flex flex-col items-center md:items-start px-6 py-8">
           <div className="flex items-center gap-2 text-night mb-1">
             <LuStar className="text-xl fill-night" />
             <span className="stat-value">4.9</span>
@@ -77,7 +77,7 @@ export default function HeroSection() {
           <div className="stat-label text-night font-semibold">Calificación promedio</div>
         </div>
 
-        <div className="stat-block bg-white flex flex-col items-center md:items-start">
+        <div className="stat-block bg-white flex flex-col items-center md:items-start px-6 py-8">
           <div className="flex items-center gap-2 text-night mb-1">
             <LuUsers className="text-xl" />
             <span className="stat-value">340+</span>

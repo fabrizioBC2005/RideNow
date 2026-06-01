@@ -11,15 +11,13 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="bg-night text-white">
         <HeroSection />
         <EarningsSection />
         <RequirementsSection />
         <FAQSection />
         <Testimonios />
         <ContactoPage />
-
-
       </main>
     </>
   )

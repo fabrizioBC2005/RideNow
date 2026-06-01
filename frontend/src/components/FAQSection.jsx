@@ -14,11 +14,11 @@ function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false)
   return (
     <div 
-      className="border-b border-gray-100 last:border-0 cursor-pointer group py-4 md:py-6" 
+      className="border-b border-gray-100 last:border-0 cursor-pointer group py-5 md:py-6" 
       onClick={() => setOpen(!open)}
     >
-      <div className="flex justify-between items-center gap-4">
-        <span className={`text-base md:text-lg font-bold transition-colors ${open ? 'text-yellow-600' : 'text-night'}`}>
+      <div className="flex flex-col sm:flex-row sm:justify-between gap-4 items-start">
+        <span className={`text-base md:text-lg font-bold leading-tight transition-colors ${open ? 'text-yellow-600' : 'text-night'}`}>
           {q}
         </span>
         <div className={`p-1 rounded-full transition-all duration-300 ${open ? 'bg-night text-yellow rotate-180' : 'bg-gray-100 text-gray-500'}`}>
@@ -43,17 +43,19 @@ export default function FAQSection() {
             <LuCircleHelp size={24} />
             <span className="font-bold uppercase tracking-widest text-xs">Soporte</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-night tracking-tight leading-none mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-night tracking-tight leading-tight mb-6">
             Preguntas <br className="hidden md:block" /> frecuentes
           </h2>
-          <p className="text-gray-500 max-w-sm">
+          <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-md">
             Todo lo que necesitas saber sobre el proceso de registro y el funcionamiento de la app en Lima.
           </p>
         </div>
 
         <div className="lg:col-span-7">
-          <div className="bg-gray-50/50 rounded-3xl p-2 md:p-8">
-            {FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}
+          <div className="bg-gray-50/50 rounded-3xl p-4 md:p-8">
+            <div className="space-y-3 md:space-y-4">
+              {FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}
+            </div>
           </div>
         </div>
       </div>

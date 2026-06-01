@@ -45,7 +45,7 @@ export default function LoginPage() {
     <>
       <Navbar />
       <main className="bg-night min-h-screen flex items-center justify-center p-6">
-        <div className="w-full max-w-[400px] bg-[#111] border border-white/5 rounded-[2rem] p-8 md:p-10 shadow-2xl">
+        <div className="w-full max-w-[520px] mx-auto bg-[#111] border border-white/5 rounded-[2rem] p-8 md:p-10 shadow-2xl">
           <div className="mb-8">
             <h1 className="text-2xl font-black text-white tracking-tighter">
               Login<span className="text-yellow">.</span>
@@ -55,14 +55,14 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <button type="button" className="w-full bg-white/[0.03] border border-white/5 rounded-xl py-3 px-4 flex items-center justify-center gap-3 hover:bg-white/[0.06] transition-all mb-6 group">
+          <button type="button" className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-3 px-4 flex items-center justify-center gap-3 hover:bg-white/[0.06] transition-all mb-6 group">
             <FcGoogle size={18} />
             <span className="text-xs font-bold text-gray-300">Continuar con Google</span>
           </button>
 
           <div className="relative flex items-center mb-6">
             <div className="flex-grow border-t border-white/5"></div>
-            <span className="flex-shrink mx-4 text-[9px] font-black text-gray-700 uppercase tracking-[0.3em]">O</span>
+            <span className="flex-shrink mx-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.35em]">O</span>
             <div className="flex-grow border-t border-white/5"></div>
           </div>
 

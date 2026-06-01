@@ -60,10 +60,10 @@ export default function ReservaViajePage() {
       <main>
 
         {/* HERO */}
-        <div className="bg-night px-8 md:px-14 py-20 grid md:grid-cols-2 gap-12">
+        <div className="bg-night px-6 md:px-14 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12">
 
           {/* FORM */}
-          <div>
+          <div className="max-w-xl mx-auto lg:mx-0">
             <span className="tag-yellow mb-5 inline-block">Reserva tu viaje</span>
 
             <h1 className="text-5xl font-black text-white mb-4">
@@ -126,7 +126,7 @@ export default function ReservaViajePage() {
           </div>
 
           {/* MAPA */}
-          <div className="rounded-2xl overflow-hidden border border-night-4 h-[520px]">
+          <div className="rounded-2xl overflow-hidden border border-night-4 h-[320px] md:h-[520px]">
             <iframe
               title="mapa"
               src={mapaURL}
@@ -142,7 +142,7 @@ export default function ReservaViajePage() {
           </span>
           
           {historial.length === 0 ? (
-            <p className="text-black-400 text-sm">
+            <p className="text-black/40 text-sm">
               Aún no tienes reservas.
             </p>
           ) : (
@@ -169,9 +169,9 @@ export default function ReservaViajePage() {
             La opción perfecta para quienes necesitan puntualidad y planificación.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {BENEFICIOS.map(b => (
-              <div key={b.title} className="card-dark flex gap-4 items-start">
+              <div key={b.title} className="card-dark flex gap-4 items-start p-6 rounded-3xl">
                 <div className="icon-yellow">{b.icon}</div>
                 <div>
                   <div className="text-white font-bold">{b.title}</div>
