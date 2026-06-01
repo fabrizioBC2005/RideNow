@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { 
+  FaWallet, 
+  FaGift, 
+  FaClock, 
+  FaCalendarDays, 
+  FaCircleCheck 
+} from "react-icons/fa6";
 
 export default function GananciasPage() {
   const [earnings_data, setEarningsData] = useState({
@@ -55,21 +62,39 @@ export default function GananciasPage() {
           <div className="bg-black text-white rounded-xl p-6 md:p-8 border border-transparent
             hover:border-yellow hover:bg-night-2 hover:shadow-lg hover:shadow-yellow/30
             transition-all duration-300 hover:-translate-y-1">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4">
-              Genera hasta S/ 250 por día
-            </h2>
+            <div className="flex items-center gap-3 mb-4">
+              <FaWallet className="text-yellow-400 text-xl md:text-2xl shrink-0" />
+              <h2 className="text-xl md:text-2xl font-semibold">
+                Genera hasta S/ 250 por día
+              </h2>
+            </div>
             <p className="text-gray-300 text-sm md:text-base">
               Dependiendo de tus horarios, la eficiencia de tus rutas y la demanda en tu zona.
             </p>
           </div>
 
           <div className={cardStyle}>
-            <h2 className="text-xl md:text-2xl font-semibold mb-4">Bonos y recompensas</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <FaGift className="text-yellow-500 text-xl md:text-2xl shrink-0" />
+              <h2 className="text-xl md:text-2xl font-semibold">Bonos y recompensas</h2>
+            </div>
             <ul className="text-gray-700 flex flex-col gap-3 text-sm md:text-base">
-              <li>✔ Bono por viajes completados</li>
-              <li>✔ Incentivos por horario nocturno</li>
-              <li>✔ Bonificación por calificación alta</li>
-              <li>✔ Promociones semanales</li>
+              <li className="flex items-center gap-2">
+                <FaCircleCheck className="text-green-500 shrink-0 text-sm" /> 
+                <span>Bono por viajes completados</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCircleCheck className="text-green-500 shrink-0 text-sm" /> 
+                <span>Incentivos por horario nocturno</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCircleCheck className="text-green-500 shrink-0 text-sm" /> 
+                <span>Bonificación por calificación alta</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <FaCircleCheck className="text-green-500 shrink-0 text-sm" /> 
+                <span>Promociones semanales</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -85,10 +110,11 @@ export default function GananciasPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             
             <div className="lg:col-span-2 space-y-6 flex flex-col justify-center">
-              
               <div>
-                <div className="flex justify-between font-medium mb-2 text-gray-700 text-sm md:text-base">
-                  <span>Horas de conducción al día:</span>
+                <div className="flex justify-between font-medium mb-2 text-gray-700 text-sm md:text-base items-center">
+                  <span className="flex items-center gap-2">
+                    <FaClock className="text-gray-400 text-sm" /> Horas de conducción al día:
+                  </span>
                   <span className="text-black font-bold bg-gray-200 px-2.5 py-0.5 rounded-full text-sm">
                     {hoursPerDay} hrs
                   </span>
@@ -105,8 +131,10 @@ export default function GananciasPage() {
               </div>
 
               <div>
-                <div className="flex justify-between font-medium mb-2 text-gray-700 text-sm md:text-base">
-                  <span>Días de trabajo al mes:</span>
+                <div className="flex justify-between font-medium mb-2 text-gray-700 text-sm md:text-base items-center">
+                  <span className="flex items-center gap-2">
+                    <FaCalendarDays className="text-gray-400 text-sm" /> Días de trabajo al mes:
+                  </span>
                   <span className="text-black font-bold bg-gray-200 px-2.5 py-0.5 rounded-full text-sm">
                     {daysPerMonth} días
                   </span>
@@ -127,7 +155,7 @@ export default function GananciasPage() {
               <span className="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">
                 Ingreso Mensual Estimado
               </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 breakthrough-word">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 break-words">
                 S/ {estimatedEarnings.toLocaleString("es-PE")}
               </h3>
               <p className="text-[11px] md:text-xs text-gray-400 max-w-xs">
