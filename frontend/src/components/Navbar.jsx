@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
+import { useAuth } from '../hooks/useAuth'
 
 const TOP_LINKS = [
   { label: 'Viaje', href: '/viaje' },
@@ -23,6 +24,7 @@ const SUB_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { usuario, logout } = useAuth()
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10)
@@ -50,12 +52,23 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/login" className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">
-              Iniciar sesión
-            </Link>
-            <Link to="/register" className="btn-yellow text-sm py-2 px-4">
-              Regístrate
-            </Link>
+            {usuario ? (
+              <button
+                onClick={logout}
+                className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors"
+              >
+                Salir
+              </button>
+            ) : (
+              <>
+                <Link to="/login" className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">
+                  Iniciar sesión
+                </Link>
+                <Link to="/register" className="btn-yellow text-sm py-2 px-4">
+                  Regístrate
+                </Link>
+              </>
+            )}
           </div>
 
           <button
@@ -93,8 +106,22 @@ export default function Navbar() {
               </a>
             ))}
             <div className="pt-4 flex flex-col gap-2">
-              <Link to="/login" className="btn-ghost justify-center text-sm">Iniciar sesión</Link>
-              <Link to="/register" className="btn-yellow justify-center text-sm">Regístrate</Link>
+              {usuario ? (
+                <button
+                  onClick={() => {
+                    logout()
+                    setOpen(false)
+                  }}
+                  className="btn-ghost justify-center text-sm"
+                >
+                  Salir
+                </button>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setOpen(false)} className="btn-ghost justify-center text-sm">Iniciar sesión</Link>
+                  <Link to="/register" onClick={() => setOpen(false)} className="btn-yellow justify-center text-sm">Regístrate</Link>
+                </>
+              )}
             </div>
           </div>
         </div>

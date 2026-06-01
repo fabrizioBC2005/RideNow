@@ -55,7 +55,7 @@ export default function RegisterPage() {
     <>
       <Navbar />
       <main className="bg-night min-h-screen flex items-center justify-center pt-28 pb-16 px-6">
-        <div className="w-full max-w-[400px] bg-[#0a0a0a] border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
+        <div className="w-full max-w-[520px] mx-auto bg-[#0a0a0a] border border-white/5 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
           <div className="mb-8">
             <h1 className="text-2xl font-black text-white tracking-tighter">Registro<span className="text-yellow">.</span></h1>
             <p className="text-[10px] text-gray-600 uppercase tracking-[0.3em] font-bold mt-1">Crea tu cuenta de RideNow</p>
@@ -106,7 +106,7 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <div className={`flex items-center gap-2 bg-white/[0.02] border rounded-xl px-4 py-3.5 transition-all ${errors.password ? 'border-red-500/40' : 'border-white/5 focus-within:border-yellow/40'}`}>
                   <input {...register("password")} type={showPass ? "text" : "password"} placeholder="Clave" className="bg-transparent text-white text-[11px] outline-none flex-1" />

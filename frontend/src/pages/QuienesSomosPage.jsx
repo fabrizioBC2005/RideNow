@@ -33,9 +33,9 @@ export default function QuienesSomosPage() {
       <main>
 
         {/* HERO */}
-        <div className="bg-night px-8 md:px-14 py-20">
+        <div className="bg-night px-6 sm:px-8 md:px-14 py-16 sm:py-20">
           <span className="tag-yellow mb-5 inline-block">Quiénes somos</span>
-          <h1 className="text-5xl md:text-7xl font-black text-white leading-none tracking-tighter mb-6 max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight tracking-tighter mb-6 max-w-3xl">
             Movemos Lima<br />
             <span className="text-yellow">con propósito.</span>
           </h1>
@@ -46,14 +46,14 @@ export default function QuienesSomosPage() {
         </div>
 
         {/* STATS */}
-        <div className="grid grid-cols-2 md:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           {[
             { val: '2023',   label: 'Año de fundación' },
             { val: '12K+',   label: 'Viajes completados' },
             { val: '340+',   label: 'Conductores activos' },
             { val: '4.9★',   label: 'Calificación promedio' },
           ].map((s, i) => (
-            <div key={s.label} className={`stat-block border-r border-night-4 last:border-r-0 ${i % 2 === 0 ? 'bg-yellow' : 'bg-night'}`}>
+            <div key={s.label} className={`stat-block border-b border-night-4 sm:border-b-0 md:border-b-0 md:border-r border-night-4 last:border-r-0 ${i % 2 === 0 ? 'bg-yellow' : 'bg-night'} px-6 py-8 sm:px-8`}>
               <div className={`stat-value ${i % 2 === 0 ? 'text-night' : 'text-yellow'}`}>{s.val}</div>
               <div className={`stat-label ${i % 2 === 0 ? 'text-night font-semibold' : 'text-gray-500'}`}>{s.label}</div>
             </div>
@@ -66,9 +66,9 @@ export default function QuienesSomosPage() {
           <h2 className="text-4xl font-black text-night tracking-tight mt-3 mb-10">
             Lo que nos mueve
           </h2>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {VALORES.map(v => (
-              <div key={v.title} className="card-dark flex gap-4 items-start">
+              <div key={v.title} className="card-dark flex gap-4 items-start p-6">
                 <div className="icon-yellow flex-shrink-0 text-night">{v.icon}</div>
                 <div>
                   <div className="text-sm font-black text-yellow mb-1">{v.title}</div>
@@ -85,7 +85,7 @@ export default function QuienesSomosPage() {
           <h2 className="text-4xl font-black text-white tracking-tight mt-3 mb-10">
             Del sueño a la <span className="text-yellow">realidad</span>
           </h2>
-          <div className="max-w-2xl space-y-0">
+          <div className="max-w-2xl space-y-8">
             {HITOS.map((h, i) => (
               <div key={h.año} className="flex gap-6 items-start">
                 <div className="flex flex-col items-center">
@@ -109,7 +109,7 @@ export default function QuienesSomosPage() {
           <h2 className="text-4xl font-black text-night tracking-tight mt-3 mb-10">
             Las personas detrás de RideNow
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {EQUIPO.map(m => (
               <div key={m.nombre} className="card-dark flex flex-col items-center text-center p-6">
                 <div className={`w-16 h-16 ${m.color} rounded-2xl flex items-center justify-center text-night font-black text-lg mb-4`}>
@@ -131,11 +131,11 @@ export default function QuienesSomosPage() {
             Sé parte de la plataforma que está cambiando la movilidad en Lima.
             Como pasajero o como conductor.
           </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/register" className="btn-black text-sm">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
+            <a href="/register" className="btn-black text-sm w-full sm:w-auto">
               Empezar como pasajero <ArrowRight size={16} />
             </a>
-            <a href="/register?role=driver" className="btn-black text-sm">
+            <a href="/register?role=driver" className="btn-black text-sm w-full sm:w-auto">
               Unirme como conductor <ArrowRight size={16} />
             </a>
           </div>

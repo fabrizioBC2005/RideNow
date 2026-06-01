@@ -5,15 +5,15 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 const ContactoPage = () => {
   return (
     <section id="contacto" className="py-20 bg-neutral-950 text-white border-t border-yellow-500/20">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-black text-yellow-400 mb-4">¿Tienes dudas?</h2>
-          <p className="text-gray-400">Estamos aquí para ayudarte 24/7</p>
+          <p className="text-gray-400 max-w-2xl mx-auto">Estamos aquí para ayudarte 24/7</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Info de contacto */}
-          <div className="space-y-8">
+          <div className="space-y-6 max-w-xl mx-auto lg:mx-0">
             <div className="flex items-center gap-4">
               <div className="bg-yellow-400 p-3 rounded-full text-black">
                 <Mail size={24} />
@@ -32,20 +32,29 @@ const ContactoPage = () => {
                 <p className="text-gray-400">+51 987 654 321</p>
               </div>
             </div>
+            <div className="flex items-center gap-4">
+              <div className="bg-yellow-400 p-3 rounded-full text-black">
+                <MapPin size={24} />
+              </div>
+              <div>
+                <h4 className="font-bold">Nuestra oficina</h4>
+                <p className="text-gray-400">Lima, Perú</p>
+              </div>
+            </div>
           </div>
 
           {/* Formulario */}
-          <div className="bg-neutral-900 p-8 rounded-2xl border border-white/10 shadow-xl">
+          <div className="bg-neutral-900 p-8 lg:p-10 rounded-3xl border border-white/10 shadow-xl">
             <form className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Nombre</label>
-                <input type="text" className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition" placeholder="Tu nombre" />
+                <input type="text" className="w-full bg-neutral-800 border border-neutral-700 rounded-2xl p-3 focus:outline-none focus:border-yellow-400 transition" placeholder="Tu nombre" />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Mensaje</label>
-                <textarea rows="4" className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-400 transition" placeholder="¿En qué podemos ayudarte?"></textarea>
+                <textarea rows="4" className="w-full bg-neutral-800 border border-neutral-700 rounded-2xl p-3 focus:outline-none focus:border-yellow-400 transition" placeholder="¿En qué podemos ayudarte?"></textarea>
               </div>
-              <button type="submit" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded-lg transition-all transform hover:scale-[1.02]">
+              <button type="submit" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded-2xl transition-all shadow-sm hover:shadow-yellow-500/30">
                 Enviar mensaje
               </button>
             </form>
