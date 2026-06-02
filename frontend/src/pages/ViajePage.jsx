@@ -1,5 +1,8 @@
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import { useViajes } from "../hooks/useViajes";
+import MapaViaje from '../components/MapaViaje'
+
 import { MapPin, Clock, Star, Shield, ArrowRight, CreditCard } from 'lucide-react'
 
 const TIPOS_VIAJE = [
@@ -23,6 +26,8 @@ const ZONAS = [
 ]
 
 export default function ViajePage() {
+    const { viajes, cargando, error } = useViajes();
+    const viajeActual = viajes[0];
     return (
         <>
             <Navbar />
@@ -69,6 +74,77 @@ export default function ViajePage() {
                         </a>
                         <p className="text-gray-600 text-xs text-center mt-3">Sin costo de registro · Cancela cuando quieras</p>
                     </div>
+                </div>
+
+                {/* VIAJE EN CURSO */}
+                <div className="bg-white px-8 md:px-14 py-12">
+                    <span className="tag-black mb-4 inline-block">
+                        Estado del viaje
+                    </span>
+
+                    <h2 className="text-4xl font-black text-night mb-8">
+                        Viaje en curso
+                    </h2>
+
+                    {cargando && (
+                        <p className="text-gray-500">
+                        Cargando viajes...
+                        </p>
+                    )}
+
+                    {error && (
+                        <p className="text-red-500">
+                        {error}
+                        </p>
+                    )}
+
+                    {!cargando && !error && !viajeActual && (
+                        <div className="bg-gray-100 rounded-xl p-6">
+                        No tienes viajes activos.
+                        </div>
+                    )}
+
+                    {!cargando && !error && viajeActual && (
+                    <div className="grid md:grid-cols-2 gap-8">
+
+                        <div className="bg-night text-white rounded-xl p-6">
+                            <h3 className="text-2xl font-bold mb-4">
+                            Información del viaje
+                            </h3>
+
+                            <p className="mb-3">
+                            <strong>Origen:</strong> {viajeActual.origen}
+                            </p>
+
+                            <p className="mb-3">
+                            <strong>Destino:</strong> {viajeActual.destino}
+                            </p>
+
+                            <p className="mb-3">
+                            <strong>Estado:</strong>
+                            <span className="text-yellow ml-2">
+                                {viajeActual.estado}
+                            </span>
+                            </p>
+
+                            <p>
+                            <strong>Fecha:</strong> {viajeActual.fecha}
+                            </p>
+                        </div>
+
+                        <MapaViaje
+                            origen={{
+                                lat: -12.0464,
+                                lng: -77.0428,
+                            }}
+                            destino={{
+                                lat: -12.0864,
+                                lng: -77.0352,
+                            }}
+                        />
+
+                    </div>
+                    )}
                 </div>
 
                 {/* TIPOS DE VIAJE */}

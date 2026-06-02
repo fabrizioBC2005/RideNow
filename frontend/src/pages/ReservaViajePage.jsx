@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import { useViajes } from "../hooks/useViajes";
+
 import { ArrowRight, Clock, Calendar, MapPin } from 'lucide-react'
 
 const BENEFICIOS = [
@@ -33,26 +35,30 @@ export default function ReservaViajePage() {
   const [destino, setDestino] = useState('')
   const [fecha, setFecha] = useState('')
   const [hora, setHora] = useState('')
-  const [historial, setHistorial] = useState([])
+  const { viajes, crearViaje } = useViajes();
 
   const mapaURL = destino
     ? `https://www.google.com/maps?q=${encodeURIComponent(origen + ' a ' + destino)}&output=embed`
     : `https://www.google.com/maps?q=${encodeURIComponent(origen || 'Lima, Peru')}&output=embed`
 
-  const handleReserva = () => {
-    if (!origen || !destino || !fecha || !hora) return
+  const handleReserva = async () => {
+    if (!origen || !destino || !fecha || !hora) return;
 
-    const nuevaReserva = {
-      origen,
-      destino,
-      fecha,
-      hora,
+    try {
+      await crearViaje({
+        origen,
+        destino,
+        fecha,
+        hora,
+        estado: "pendiente",
+      });
+
+      alert("Reserva creada con éxito ✔️");
+    } catch (error) {
+      console.error(error);
+      alert("Error al crear reserva");
     }
-
-    setHistorial([nuevaReserva, ...historial])
-
-    alert('Reserva creada con éxito ✔️')
-  }
+  };
 
   return (
     <>
@@ -136,23 +142,38 @@ export default function ReservaViajePage() {
         </div>
 
         {/* HISTORIAL */}
-          <div className="bg-yellow px-8 md:px-14 py-8">
-           <span className="tag-black mb-6 inline-block">
+        <div className="bg-yellow px-8 md:px-14 py-8">
+          <span className="tag-black mb-6 inline-block">
            Historial de reservas
           </span>
           
-          {historial.length === 0 ? (
+          {viajes.length === 0 ? (
             <p className="text-black-400 text-sm">
               Aún no tienes reservas.
             </p>
           ) : (
             <div className="grid md:grid-cols-2 gap-4">
-              {historial.map((h, i) => (
+              {viajes.map((viaje, i) => (
                 <div key={i} className="card-dark p-4">
-                  <p className="text-xs text-gray-400">Origen: {h.origen}</p>
-                  <p className="text-xs text-gray-400">Destino: {h.destino}</p>
-                  <p className="text-xs text-gray-400">Fecha: {h.fecha}</p>
-                  <p className="text-xs text-gray-400">Hora: {h.hora}</p>
+                  <p className="text-xs text-gray-400">
+                    Origen: {viaje.origen}
+                  </p>
+
+                  <p className="text-xs text-gray-400">
+                    Destino: {viaje.destino}
+                  </p>
+
+                  <p className="text-xs text-gray-400">
+                    Fecha: {viaje.fecha}
+                  </p>
+
+                  <p className="text-xs text-gray-400">
+                    Hora: {viaje.hora}
+                  </p>
+
+                  <p className="text-xs text-yellow font-semibold">
+                    Estado: {viaje.estado}
+                  </p>
                 </div>
               ))}
             </div>
