@@ -4,7 +4,7 @@ export default function Footer() {
   const today = new Date();
   
   return (
-    <footer className="bg-night px-14 py-10 flex flex-col gap-8 border-t-2 border-yellow">
+    <footer className="bg-night px-6 md:px-14 py-10 flex flex-col gap-8 border-t-2 border-yellow">
       <div className="flex flex-col md:flex-row justify-between items-start gap-8">
         <div className="max-w-sm">
           <h2 className="text-yellow text-2xl font-black tracking-tighter">
@@ -16,7 +16,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex gap-5 text-2xl text-gray-500">
+        <div className="flex gap-5 text-2xl text-gray-500 justify-start md:justify-end">
           <a href="#" className="hover:text-yellow transition-colors">
             <IoLogoWhatsapp />
           </a>
@@ -30,7 +30,7 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-800 gap-4">
-        <div className="flex gap-6">
+        <div className="flex flex-wrap justify-center md:justify-start gap-4">
           {['Privacidad', 'Términos', 'Ayuda', 'Contacto'].map((link) => (
             <a 
               key={link} 
@@ -42,7 +42,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col items-end gap-1">
+        <div className="flex flex-col items-center md:items-end gap-1 text-center md:text-right">
           <span className="text-gray-600 text-[10px] uppercase tracking-widest font-mono">
             Made by <span className="text-yellow">RideNow</span>
           </span>

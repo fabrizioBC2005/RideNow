@@ -48,37 +48,37 @@ export default function NegociosPage() {
             <main>
 
                 {/* HERO */}
-                <div className="bg-night px-8 md:px-14 py-20 grid md:grid-cols-2 gap-12 items-center">
+                <div className="bg-night px-6 md:px-14 py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
                     <div>
                         <span className="tag-yellow mb-5 inline-block">RideNow para empresas</span>
-                        <h1 className="text-5xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tighter mb-4">
                             Moviliza tu<br />
                             <span className="text-yellow">equipo sin</span><br />
                             complicaciones.
                         </h1>
-                        <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-md">
+                        <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-xl">
                             Gestiona los viajes de todos tus empleados desde un solo lugar.
                             Facturación centralizada, control total y soporte dedicado.
                         </p>
-                        <div className="flex flex-wrap gap-3">
-                            <a href="/register?plan=business" className="btn-yellow text-sm">
+                        <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                            <a href="/register?plan=business" className="btn-yellow text-sm w-full sm:w-auto">
                                 Solicitar demo <ArrowRight size={16} />
                             </a>
-                            <a href="#planes" className="btn-ghost text-sm">
+                            <a href="#planes" className="btn-ghost text-sm w-full sm:w-auto">
                                 Ver planes
                             </a>
                         </div>
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
                         {[
                             { val: '200+', label: 'Empresas activas' },
                             { val: '98%', label: 'Satisfacción de clientes' },
                             { val: 'S/0', label: 'Costo de implementación' },
                             { val: '24/7', label: 'Soporte empresarial' },
                         ].map(s => (
-                            <div key={s.label} className="bg-night-2 border border-night-4 rounded-xl p-5">
+                            <div key={s.label} className="bg-night-2 border border-night-4 rounded-2xl p-5">
                                 <div className="text-3xl font-black text-yellow tracking-tighter">{s.val}</div>
                                 <div className="text-xs text-gray-500 mt-1">{s.label}</div>
                             </div>
@@ -87,11 +87,11 @@ export default function NegociosPage() {
                 </div>
 
                 {/* CLIENTES */}
-                <div className="bg-yellow px-8 md:px-14 py-8">
+                <div className="bg-yellow px-6 md:px-14 py-8">
                     <p className="text-night text-xs font-extrabold uppercase tracking-widest text-center mb-5">
                         Empresas que confían en RideNow
                     </p>
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-4">
                         {CLIENTES.map(c => (
                             <span key={c} className="bg-night text-yellow text-xs font-bold px-4 py-2 rounded-md">
                                 {c}
@@ -109,9 +109,9 @@ export default function NegociosPage() {
                     <p className="text-gray-400 text-sm mb-10 max-w-md">
                         Diseñado para equipos de trabajo que necesitan movilidad confiable y control total.
                     </p>
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {BENEFICIOS.map(b => (
-                            <div key={b.title} className="card-dark flex gap-4 items-start">
+                            <div key={b.title} className="card-dark flex gap-4 items-start p-6 rounded-3xl">
                                 <div className="icon-yellow flex-shrink-0 text-night">{b.icon}</div>
                                 <div>
                                     <div className="text-sm font-bold text-white mb-1">{b.title}</div>
@@ -131,9 +131,9 @@ export default function NegociosPage() {
                     <p className="text-gray-500 text-sm mb-10 max-w-md">
                         Sin contratos anuales obligatorios. Cambia o cancela cuando quieras.
                     </p>
-                    <div className="grid md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {PLANES.map(p => (
-                            <div key={p.nombre} className={`rounded-xl p-6 relative border-2 ${p.popular ? 'border-yellow bg-night-2' : 'border-night-4 bg-night-2'}`}>
+                            <div key={p.nombre} className={`rounded-3xl p-6 relative border-2 ${p.popular ? 'border-yellow bg-night-2' : 'border-night-4 bg-night-2'}`}>
                                 {p.popular && (
                                     <span className="absolute -top-3 left-6 tag-yellow text-xs">Más popular</span>
                                 )}
@@ -151,8 +151,7 @@ export default function NegociosPage() {
                                     ))}
                                 </ul>
                                 <a href="/register?plan=business"
-                                    className={`w-full justify-center text-sm ${p.popular ? 'btn-yellow' : 'btn-ghost'}`}
-                                    style={{ display: 'flex' }}>
+                                    className={`w-full inline-flex justify-center text-sm ${p.popular ? 'btn-yellow' : 'btn-ghost'}`}>
                                     {p.cta}
                                 </a>
                             </div>

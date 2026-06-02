@@ -34,18 +34,18 @@ export default function ViajePage() {
             <main>
 
                 {/* HERO */}
-                <div className="bg-night px-8 md:px-14 py-20 grid md:grid-cols-2 gap-12 items-center">
-                    <div>
+                <div className="bg-night px-6 md:px-14 py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+                    <div className="max-w-xl">
                         <span className="tag-yellow mb-5 inline-block">Solicita tu viaje</span>
-                        <h1 className="text-5xl md:text-6xl font-black text-white leading-none tracking-tighter mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tighter mb-4">
                             Tu destino,<br />
                             <span className="text-yellow">en minutos.</span>
                         </h1>
-                        <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-md">
+                        <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-lg">
                             Conectamos pasajeros con conductores verificados cerca de ti.
                             Precio justo, viaje seguro, sin sorpresas.
                         </p>
-                        <a href="/register" className="btn-yellow text-sm">
+                        <a href="/register" className="btn-yellow text-sm inline-flex items-center gap-2">
                             Solicitar viaje ahora <ArrowRight size={16} />
                         </a>
                     </div>
@@ -157,16 +157,16 @@ export default function ViajePage() {
                         Desde el viaje más económico hasta el más cómodo, tenemos la opción perfecta para ti.
                     </p>
 
-                    <div className="grid md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {TIPOS_VIAJE.map(t => (
-                            <div key={t.nombre} className={`border-2 rounded-xl p-6 relative transition-all cursor-pointer hover:border-yellow ${t.popular ? 'border-yellow' : 'border-gray-100'}`}>
+                            <div key={t.nombre} className={`border-2 rounded-2xl p-6 relative transition-all cursor-pointer hover:border-yellow ${t.popular ? 'border-yellow' : 'border-gray-100'}`}>
                                 {t.popular && (
                                     <span className="absolute -top-3 left-6 tag-yellow text-xs">Más popular</span>
                                 )}
                                 <div className="text-4xl mb-4">{t.icon}</div>
                                 <div className="text-lg font-black text-night mb-1">{t.nombre}</div>
                                 <div className="text-sm text-gray-400 mb-4">{t.desc}</div>
-                                <div className="flex justify-between items-center">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                                     <div>
                                         <div className="text-xs text-gray-400">Tiempo estimado</div>
                                         <div className="text-sm font-bold text-night">{t.tiempo}</div>
@@ -187,9 +187,9 @@ export default function ViajePage() {
                     <h2 className="text-4xl font-black text-white tracking-tight mt-3 mb-10">
                         Solicitar un viaje es <span className="text-yellow">muy fácil</span>
                     </h2>
-                    <div className="grid md:grid-cols-5 gap-0.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
                         {PASOS.map(p => (
-                            <div key={p.num} className="step-card">
+                            <div key={p.num} className="step-card rounded-3xl bg-night-2 p-6 border border-night-4">
                                 <div className="step-num">{p.num}</div>
                                 <div className="yellow-bar mb-4" />
                                 <div className="icon-yellow mb-4 text-night">{p.icon}</div>
@@ -201,18 +201,18 @@ export default function ViajePage() {
                 </div>
 
                 {/* ZONAS DE COBERTURA */}
-                <div className="bg-yellow px-8 md:px-14 py-16">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="bg-yellow px-6 md:px-14 py-16">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
                         <div>
                             <span className="tag-black mb-4 inline-block">Cobertura</span>
                             <h2 className="text-4xl font-black text-night tracking-tight mt-3 mb-4">
                                 Operamos en toda Lima Metropolitana
                             </h2>
-                            <p className="text-gray-700 text-sm leading-relaxed mb-6">
+                            <p className="text-gray-700 text-sm leading-relaxed mb-6 max-w-xl">
                                 Más de 30 distritos cubiertos. Si tu zona no aparece, regístrate
                                 y te avisamos cuando lleguemos.
                             </p>
-                            <a href="/register" className="btn-black text-sm">
+                            <a href="/register" className="btn-black text-sm inline-flex items-center gap-2">
                                 Ver todas las zonas <ArrowRight size={15} />
                             </a>
                         </div>
