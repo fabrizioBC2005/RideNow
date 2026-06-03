@@ -3,8 +3,8 @@ import Footer from "../../components/Footer";
 import ConduceMenu from "../../components/ConduceMenu";
 
 export default function PrimerViajePage() {
-const cardStyle =
-  "bg-white shadow-md rounded-xl p-6 border border-transparent hover:border-yellow hover:shadow-lg hover:shadow-yellow/30 transition-all duration-300 hover:-translate-y-1";
+  const cardStyle =
+    "bg-white shadow-md rounded-xl p-6 border border-transparent hover:border-yellow hover:shadow-lg hover:shadow-yellow/30 transition-all duration-300 hover:-translate-y-1";
 
   return (
     <>
@@ -25,7 +25,9 @@ const cardStyle =
           </div>
 
           <div className={cardStyle}>
-            <h2 className="text-xl font-semibold mb-2">2. Enciende tu disponibilidad</h2>
+            <h2 className="text-xl font-semibold mb-2">
+              2. Enciende tu disponibilidad
+            </h2>
             <p className="text-gray-600">
               Ingresa a la app y cambia tu estado a “Disponible”.
             </p>
@@ -39,7 +41,9 @@ const cardStyle =
           </div>
 
           <div className={cardStyle}>
-            <h2 className="text-xl font-semibold mb-2">4. Recoge al pasajero</h2>
+            <h2 className="text-xl font-semibold mb-2">
+              4. Recoge al pasajero
+            </h2>
             <p className="text-gray-600">
               Sigue el mapa y confirma la identidad del usuario.
             </p>

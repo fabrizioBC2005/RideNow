@@ -42,7 +42,8 @@ export default function ContactanosPage() {
     if (!formData.message.trim()) {
       newErrors.message = "El mensaje no puede estar vacío.";
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Por favor, detalla un poco más tu mensaje (mínimo 10 caracteres).";
+      newErrors.message =
+        "Por favor, detalla un poco más tu mensaje (mínimo 10 caracteres).";
     }
 
     return newErrors;
@@ -75,10 +76,11 @@ export default function ContactanosPage() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setSubmitSuccess(true);
       setFormData({ fullName: "", email: "", message: "" });
-
     } catch (error) {
       console.error("Backend connection error:", error);
-      setErrors({ server: "Hubo un problema al enviar tu mensaje. Inténtalo más tarde." });
+      setErrors({
+        server: "Hubo un problema al enviar tu mensaje. Inténtalo más tarde.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -89,19 +91,20 @@ export default function ContactanosPage() {
       <Navbar />
 
       <div className="px-4 sm:px-6 md:px-10 py-10 md:py-14 max-w-7xl mx-auto flex flex-col items-center">
-        
         <div className="w-full max-w-2xl text-center md:text-left mb-10">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Contáctanos</h1>
           <p className="text-gray-600 text-sm md:text-base">
-            Si tienes dudas o necesitas soporte, completa el formulario y te responderemos pronto.
+            Si tienes dudas o necesitas soporte, completa el formulario y te
+            responderemos pronto.
           </p>
         </div>
 
         <div className="w-full max-w-2xl bg-white shadow-md rounded-xl p-6 sm:p-8 border border-gray-100 hover:border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-400/10 transition-all duration-300">
-          
           {submitSuccess && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg font-medium flex items-center gap-2">
-              <span>¡Mensaje enviado con éxito! Nos comunicaremos contigo en breve.</span>
+              <span>
+                ¡Mensaje enviado con éxito! Nos comunicaremos contigo en breve.
+              </span>
             </div>
           )}
 
@@ -111,8 +114,11 @@ export default function ContactanosPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-            
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
+            noValidate
+          >
             <div className="flex flex-col gap-1">
               <div className="relative flex items-center">
                 <LuUser className="absolute left-3 text-gray-400 text-lg" />
@@ -123,11 +129,17 @@ export default function ContactanosPage() {
                   onChange={handleChange}
                   placeholder="Nombre completo"
                   className={`w-full border rounded-lg pl-10 pr-3 py-3 text-sm transition-colors focus:outline-none focus:ring-2 ${
-                    errors.fullName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-black/10 focus:border-black"
+                    errors.fullName
+                      ? "border-red-500 focus:ring-red-200"
+                      : "border-gray-300 focus:ring-black/10 focus:border-black"
                   }`}
                 />
               </div>
-              {errors.fullName && <span className="text-xs text-red-500 font-medium px-1">{errors.fullName}</span>}
+              {errors.fullName && (
+                <span className="text-xs text-red-500 font-medium px-1">
+                  {errors.fullName}
+                </span>
+              )}
             </div>
 
             <div className="flex flex-col gap-1">
@@ -140,11 +152,17 @@ export default function ContactanosPage() {
                   onChange={handleChange}
                   placeholder="Correo electrónico"
                   className={`w-full border rounded-lg pl-10 pr-3 py-3 text-sm transition-colors focus:outline-none focus:ring-2 ${
-                    errors.email ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-black/10 focus:border-black"
+                    errors.email
+                      ? "border-red-500 focus:ring-red-200"
+                      : "border-gray-300 focus:ring-black/10 focus:border-black"
                   }`}
                 />
               </div>
-              {errors.email && <span className="text-xs text-red-500 font-medium px-1">{errors.email}</span>}
+              {errors.email && (
+                <span className="text-xs text-red-500 font-medium px-1">
+                  {errors.email}
+                </span>
+              )}
             </div>
 
             <div className="flex flex-col gap-1">
@@ -156,11 +174,17 @@ export default function ContactanosPage() {
                   onChange={handleChange}
                   placeholder="Escribe tu mensaje..."
                   className={`w-full border rounded-lg pl-10 pr-3 py-3 text-sm h-32 resize-none transition-colors focus:outline-none focus:ring-2 ${
-                    errors.message ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-black/10 focus:border-black"
+                    errors.message
+                      ? "border-red-500 focus:ring-red-200"
+                      : "border-gray-300 focus:ring-black/10 focus:border-black"
                   }`}
                 ></textarea>
               </div>
-              {errors.message && <span className="text-xs text-red-500 font-medium px-1">{errors.message}</span>}
+              {errors.message && (
+                <span className="text-xs text-red-500 font-medium px-1">
+                  {errors.message}
+                </span>
+              )}
             </div>
 
             <button
@@ -168,10 +192,11 @@ export default function ContactanosPage() {
               disabled={isSubmitting}
               className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-200 disabled:text-gray-400 text-black font-semibold py-3 rounded-lg text-sm transition-all shadow-sm active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
             >
-              <LuSend className={`text-base ${isSubmitting ? "animate-pulse" : ""}`} />
+              <LuSend
+                className={`text-base ${isSubmitting ? "animate-pulse" : ""}`}
+              />
               {isSubmitting ? "Enviando..." : "Enviar mensaje"}
             </button>
-
           </form>
         </div>
       </div>
