@@ -1,9 +1,10 @@
 ﻿CREATE DATABASE IF NOT EXISTS ridenow;
 USE ridenow;
 
-CREATE TABLE IF NOT EXISTS usuarios (
-  id         INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE usuarios (
+  id         VARCHAR(20) PRIMARY KEY,
   nombre     VARCHAR(100) NOT NULL,
+  dni        VARCHAR(8) NOT NULL UNIQUE,
   email      VARCHAR(100) NOT NULL UNIQUE,
   password   VARCHAR(255) NOT NULL,
   telefono   VARCHAR(20),
@@ -12,10 +13,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
   creado_en  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS conductores (
-  id            INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id    INT NOT NULL,
-  licencia      VARCHAR(50) NOT NULL,
+CREATE TABLE conductores (
+  id            VARCHAR(20) PRIMARY KEY,       
+  usuario_id    VARCHAR(20) NOT NULL UNIQUE,
+  licencia      VARCHAR(50) NOT NULL UNIQUE,
   vehiculo      VARCHAR(100) NOT NULL,
   placa         VARCHAR(20) NOT NULL UNIQUE,
   calificacion  DECIMAL(3,2) DEFAULT 5.00,
@@ -24,10 +25,10 @@ CREATE TABLE IF NOT EXISTS conductores (
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE IF NOT EXISTS viajes (
+CREATE TABLE viajes (
   id           INT AUTO_INCREMENT PRIMARY KEY,
-  pasajero_id  INT NOT NULL,
-  conductor_id INT,
+  pasajero_id  VARCHAR(20) NOT NULL,
+  conductor_id VARCHAR(20),
   origen       VARCHAR(255) NOT NULL,
   destino      VARCHAR(255) NOT NULL,
   estado       ENUM("pendiente","en_curso","completado","cancelado") DEFAULT "pendiente",
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS viajes (
   FOREIGN KEY (conductor_id) REFERENCES conductores(id)
 );
 
-CREATE TABLE IF NOT EXISTS pagos (
+CREATE TABLE pagos (
   id        INT AUTO_INCREMENT PRIMARY KEY,
   viaje_id  INT NOT NULL,
   monto     DECIMAL(10,2) NOT NULL,
