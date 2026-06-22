@@ -1,9 +1,11 @@
-ï»¿import { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useNavigate } from 'react-router-dom'
-import { LuUser, LuMail, LuPhone, LuEye, LuEyeOff, LuArrowRight, LuMapPin, LuCircleAlert } from 'react-icons/lu'
+import { LuUser, LuMail, LuPhone, LuEye, LuEyeOff, LuArrowRight, LuMapPin, LuCircleAlert, LuLocateFixed } from 'react-icons/lu'
+import { Autocomplete, useJsApiLoader } from '@react-google-maps/api'
+import { GOOGLE_MAPS_LIBRARIES } from '../config/googleMaps'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useAuth } from '../hooks/useAuth'
@@ -28,6 +30,41 @@ export default function RegisterPage() {
   const [errorServidor, setErrorServidor] = useState(null)
   const { register: authRegister } = useAuth()
   const navigate = useNavigate()
+  const [autocomplete, setAutocomplete] = useState(null)
+  const [coords, setCoords] = useState({ latitud: null, longitud: null })
+  const [loadingGeo, setLoadingGeo] = useState(false)
+
+  const usarUbicacionActual = () => {
+    if (!navigator.geolocation) return alert("Tu navegador no soporta geolocalización")
+    setLoadingGeo(true)
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords
+        setCoords({ latitud: latitude, longitud: longitude })
+        const geocoder = new window.google.maps.Geocoder()
+        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+          if (status === "OK" && results[0]) {
+            setValue("address", results[0].formatted_address, { shouldValidate: true })
+          }
+          setLoadingGeo(false)
+        })
+      },
+      () => { alert("No se pudo obtener tu ubicación"); setLoadingGeo(false) }
+    )
+  }
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
+    libraries: GOOGLE_MAPS_LIBRARIES,
+  })
+  const onLoadAutocomplete = (auto) => setAutocomplete(auto)
+  const onPlaceChanged = () => {
+    if (autocomplete) {
+      const place = autocomplete.getPlace()
+      if (place.formatted_address) {
+        setValue('address', place.formatted_address, { shouldValidate: true })
+      }
+    }
+  }
 
   const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(registerSchema)
@@ -44,6 +81,8 @@ export default function RegisterPage() {
     setErrorServidor(null)
     try {
       const { confirmPassword, ...datosParaApi } = data
+      datosParaApi.latitud = coords.latitud
+      datosParaApi.longitud = coords.longitud
       await authRegister(datosParaApi)
       navigate('/')
     } catch (error) {
@@ -101,8 +140,17 @@ export default function RegisterPage() {
 
             <div className="group">
               <div className="flex items-center gap-3 bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3.5 focus-within:border-yellow/40 transition-all">
-                <LuMapPin className="text-gray-600" size={16} />
-                <input {...register("address")} placeholder="Direccion (Opcional)" className="bg-transparent text-white text-xs outline-none flex-1" />
+                <LuMapPin className="text-gray-600 shrink-0" size={16} />
+                {isLoaded ? (
+                  <Autocomplete onLoad={onLoadAutocomplete} onPlaceChanged={onPlaceChanged}>
+                    <input {...register("address")} placeholder="Direccion (Opcional)" className="bg-transparent text-white text-xs outline-none flex-1" />
+                  </Autocomplete>
+                ) : (
+                  <input {...register("address")} placeholder="Direccion (Opcional)" className="bg-transparent text-white text-xs outline-none flex-1" />
+                )}
+                <button type="button" onClick={usarUbicacionActual} className="shrink-0 text-gray-600 hover:text-yellow transition-colors" title="Usar mi ubicacion actual">
+                  {loadingGeo ? <span className="text-[10px] text-gray-500">...</span> : <LuLocateFixed size={14} />}
+                </button>
               </div>
             </div>
 
@@ -144,3 +192,15 @@ export default function RegisterPage() {
     </>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+

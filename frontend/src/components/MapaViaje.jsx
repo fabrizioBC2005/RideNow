@@ -1,4 +1,5 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_LIBRARIES } from "../config/googleMaps";
 
 const containerStyle = {
   width: "100%",
@@ -17,6 +18,7 @@ export default function MapaViaje({
 }) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
+    libraries: GOOGLE_MAPS_LIBRARIES,
   });
 
   if (!isLoaded) {
@@ -49,3 +51,5 @@ export default function MapaViaje({
     </GoogleMap>
   );
 }
+
+
