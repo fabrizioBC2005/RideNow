@@ -53,12 +53,17 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-4">
             {usuario ? (
-              <button
-                onClick={logout}
-                className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors"
-              >
-                Salir
-              </button>
+              <div className="flex items-center gap-4">
+                <Link to="/perfil" className="text-gray-300 text-sm font-medium no-underline hover:text-yellow transition-colors">
+                  Hola, {usuario.nombre?.split(' ')[0]}
+                </Link>
+                <button
+                  onClick={logout}
+                  className="text-gray-400 text-xs font-medium no-underline hover:text-white transition-colors border border-white/10 px-3 py-1.5 rounded-lg"
+                >
+                  Salir
+                </button>
+              </div>
             ) : (
               <>
                 <Link to="/login" className="text-gray-300 text-sm font-medium no-underline hover:text-white transition-colors">
@@ -79,7 +84,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        <div className="hidden md:flex items-center justify-between px-8 h-12 bg-white border-b-2 border-yellow">
+        {!usuario && <div className="hidden md:flex items-center justify-between px-8 h-12 bg-white border-b-2 border-yellow">
           <span className="text-night font-extrabold text-sm">Conduce</span>
           <div className="flex items-center gap-5">
             {SUB_LINKS.map(l => (
@@ -89,7 +94,7 @@ export default function Navbar() {
               </a>
             ))}
           </div>
-        </div>
+        </div>}
 
         <div className={`md:hidden bg-night border-b-2 border-yellow overflow-hidden transition-all duration-300 ${open ? 'max-h-screen' : 'max-h-0'}`}>
           <div className="px-5 py-4">
@@ -107,15 +112,17 @@ export default function Navbar() {
             ))}
             <div className="pt-4 flex flex-col gap-2">
               {usuario ? (
-                <button
-                  onClick={() => {
-                    logout()
-                    setOpen(false)
-                  }}
-                  className="btn-ghost justify-center text-sm"
-                >
-                  Salir
-                </button>
+                <>
+                  <Link to="/perfil" onClick={() => setOpen(false)} className="btn-ghost justify-center text-sm">
+                    Mi perfil ({usuario.nombre?.split(' ')[0]})
+                  </Link>
+                  <button
+                    onClick={() => { logout(); setOpen(false) }}
+                    className="btn-ghost justify-center text-sm"
+                  >
+                    Salir
+                  </button>
+                </>
               ) : (
                 <>
                   <Link to="/login" onClick={() => setOpen(false)} className="btn-ghost justify-center text-sm">Iniciar sesión</Link>
@@ -127,7 +134,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      <div className="h-14 md:h-28" />
+      <div className={usuario ? "h-14" : "h-14 md:h-28"} />
     </>
   )
 }

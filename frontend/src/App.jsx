@@ -15,6 +15,7 @@ import PrimerViajePage from './pages/conduce/PrimerViajePage'
 import SeguridadPage from './pages/conduce/SeguridadPage'
 import ContactanosPage from './pages/conduce/ContactanosPage'
 import ProtectedRoute from './components/ProtectedRoute'
+import PerfilPage from './pages/PerfilPage'
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
 
       <Route element={<ProtectedRoute />}>
         {/* <Route path="/dashboard"  element={<DashboardPage />} /> */}
-        {/* <Route path="/perfil"     element={<PerfilPage />} /> */}
+        <Route path="/perfil" element={<PerfilPage />} />
         {/* <Route path="/mis-viajes" element={<MisViajesPage />} /> */}
       </Route>
     </Routes>

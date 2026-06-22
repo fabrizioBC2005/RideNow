@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useNavigate } from 'react-router-dom'
-import { LuUser, LuMail, LuPhone, LuEye, LuEyeOff, LuArrowRight, LuMapPin, LuCircleAlert, LuLocateFixed } from 'react-icons/lu'
+import { LuUser, LuMail, LuPhone, LuEye, LuEyeOff, LuArrowRight, LuMapPin, LuCircleAlert, LuLocateFixed, LuCreditCard } from 'react-icons/lu'
 import { Autocomplete, useJsApiLoader } from '@react-google-maps/api'
 import { GOOGLE_MAPS_LIBRARIES } from '../config/googleMaps'
 import Navbar from '../components/Navbar'
@@ -13,6 +13,7 @@ import { useAuth } from '../hooks/useAuth'
 const registerSchema = z.object({
   fullName: z.string().min(1, "Ingresa tu nombre").min(3, "Nombre muy corto"),
   email: z.string().min(1, "Ingresa tu email").email("Email invalido"),
+  dni: z.string().min(1, "Ingresa tu DNI").length(8, "El DNI debe tener 8 digitos").regex(/^\d+$/, "Solo numeros"),
   phone: z.string()
     .min(1, "Ingresa tu celular")
     .min(11, "Faltan numeros")
@@ -35,7 +36,7 @@ export default function RegisterPage() {
   const [loadingGeo, setLoadingGeo] = useState(false)
 
   const usarUbicacionActual = () => {
-    if (!navigator.geolocation) return alert("Tu navegador no soporta geolocalizaciÛn")
+    if (!navigator.geolocation) return alert("Tu navegador no soporta geolocalizaci√≥n")
     setLoadingGeo(true)
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -49,7 +50,7 @@ export default function RegisterPage() {
           setLoadingGeo(false)
         })
       },
-      () => { alert("No se pudo obtener tu ubicaciÛn"); setLoadingGeo(false) }
+      () => { alert("No se pudo obtener tu ubicaci√≥n"); setLoadingGeo(false) }
     )
   }
   const { isLoaded } = useJsApiLoader({
@@ -125,6 +126,13 @@ export default function RegisterPage() {
             </div>
 
             <div className="group">
+              <div className={`flex items-center gap-3 bg-white/[0.02] border rounded-xl px-4 py-3.5 transition-all ${errors.dni ? 'border-red-500/40' : 'border-white/5 focus-within:border-yellow/40'}`}>
+                <LuCreditCard className="text-gray-600" size={16} />
+                <input {...register("dni")} placeholder="DNI (8 digitos)" maxLength={8} className="bg-transparent text-white text-xs outline-none flex-1" />
+              </div>
+              {errors.dni && <p className="text-[9px] text-red-500 font-bold italic mt-1 ml-1 uppercase">{errors.dni.message}</p>}
+            </div>
+                        <div className="group">
               <div className={`flex items-center gap-3 bg-white/[0.02] border rounded-xl px-4 py-3.5 transition-all ${errors.phone ? 'border-red-500/40' : 'border-white/5 focus-within:border-yellow/40'}`}>
                 <LuPhone className="text-gray-600" size={16} />
                 <span className="text-[10px] font-black text-gray-800 border-r border-white/5 pr-2">+51</span>
@@ -192,6 +200,7 @@ export default function RegisterPage() {
     </>
   )
 }
+
 
 
 
