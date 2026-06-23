@@ -23,6 +23,7 @@ const SUB_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { usuario, logout } = useAuth()
 
@@ -53,16 +54,31 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-4">
             {usuario ? (
-              <div className="flex items-center gap-4">
-                <Link to="/perfil" className="text-gray-300 text-sm font-medium no-underline hover:text-yellow transition-colors">
-                  Hola, {usuario.nombre?.split(' ')[0]}
-                </Link>
+              <div className="relative">
                 <button
-                  onClick={logout}
-                  className="text-gray-400 text-xs font-medium no-underline hover:text-white transition-colors border border-white/10 px-3 py-1.5 rounded-lg"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2 text-gray-300 text-sm font-medium hover:text-yellow transition-colors"
                 >
-                  Salir
+                  <div className="w-7 h-7 rounded-full bg-yellow/10 border border-yellow/20 flex items-center justify-center">
+                    <span className="text-yellow font-black text-xs">{usuario.nombre?.charAt(0).toUpperCase()}</span>
+                  </div>
+                  Hola, {usuario.nombre?.split(' ')[0]}
+                  <span className="text-[10px] text-gray-600">{dropdownOpen ? '▲' : '▼'}</span>
                 </button>
+                {dropdownOpen && (
+                  <div className="absolute right-0 top-10 bg-[#0a0a0a] border border-white/10 rounded-2xl py-2 w-44 shadow-2xl z-50">
+                    <Link to="/perfil" onClick={() => setDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-gray-300 text-xs font-bold no-underline hover:text-yellow hover:bg-white/5 transition-all">
+                      Mi perfil
+                    </Link>
+                    <Link to="/historial" onClick={() => setDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-gray-300 text-xs font-bold no-underline hover:text-yellow hover:bg-white/5 transition-all">
+                      Mis viajes
+                    </Link>
+                    <div className="border-t border-white/5 my-1" />
+                    <button onClick={() => { logout(); setDropdownOpen(false) }} className="w-full text-left flex items-center gap-2 px-4 py-2.5 text-red-400 text-xs font-bold hover:bg-white/5 transition-all">
+                      Cerrar sesion
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <>

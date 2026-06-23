@@ -33,6 +33,14 @@ export default function ReservaViajePage() {
   const [hora, setHora] = useState('')
   const [cargandoViaje, setCargandoViaje] = useState(false)
   const [exitoViaje, setExitoViaje] = useState(false)
+  const [buscando, setBuscando] = useState(false)
+  const [conductoresSimulados, setConductoresSimulados] = useState([])
+  const [conductorElegido, setConductorElegido] = useState(null)
+  const [viajeEnCurso, setViajeEnCurso] = useState(false)
+  const [mostrarOfertas, setMostrarOfertas] = useState(false)
+  const [notificacion, setNotificacion] = useState(null)
+  const [viajeActualId, setViajeActualId] = useState(null)
+  const [enCamino, setEnCamino] = useState(false)
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
@@ -122,15 +130,71 @@ export default function ReservaViajePage() {
     })
   }
 
+  const generarConductores = (centro) => {
+    const nombres = ['Carlos R.', 'Luis M.', 'Juan P.', 'Pedro A.', 'Miguel S.']
+    const autos = ['Toyota Yaris', 'Hyundai i10', 'Kia Rio', 'Suzuki Swift', 'Nissan Versa']
+    const avatares = ['C', 'L', 'J', 'P', 'M']
+    return Array.from({ length: 4 }, (_, i) => ({
+      id: i + 1,
+      nombre: nombres[i],
+      auto: autos[i],
+      avatar: avatares[i],
+      calificacion: (4.5 + Math.random() * 0.5).toFixed(1),
+      precio: precioEst ? precioEst + Math.floor(Math.random() * 4 - 1) : 8 + Math.floor(Math.random() * 5),
+      tiempo: `${2 + Math.floor(Math.random() * 5)} min`,
+      lat: centro.lat + (Math.random() - 0.5) * 0.008,
+      lng: centro.lng + (Math.random() - 0.5) * 0.008,
+    }))
+  }
+
   const handleReservaApp = async () => {
     if (!origenVal || !destinoVal) return
-    setCargandoViaje(true)
+    setBuscando(true)
+    setMostrarOfertas(false)
+    const centro = misCoordsGPS || miUbicacion
+    setConductoresSimulados(generarConductores(centro))
     try {
-      await crearViaje({ origen: origenVal, destino: destinoVal, precio: precioEst })
+      const res = await crearViaje({ origen: origenVal, destino: destinoVal, precio: precioEst })
+      if (res?.id) setViajeActualId(res.id)
+    } catch (e) { console.error(e) }
+    setTimeout(() => setMostrarOfertas(true), 3000)
+  }
+
+  const confirmarEnCamino = () => {
+    setEnCamino(true)
+    setNotificacion({ tipo: 'info', mensaje: 'El conductor sabe que vas en camino. Buen viaje!' })
+    setTimeout(() => setNotificacion(null), 4000)
+  }
+
+  const cancelarViaje = () => {
+    setBuscando(false)
+    setMostrarOfertas(false)
+    setConductoresSimulados([])
+    setViajeEnCurso(false)
+    setConductorElegido(null)
+    setNotificacion(null)
+    setEnCamino(false)
+  }
+
+  const elegirConductor = (conductor) => {
+    setConductorElegido(conductor)
+    setBuscando(false)
+    setMostrarOfertas(false)
+    setViajeEnCurso(true)
+    // Notificacion 1: conductor aceptó
+    setNotificacion({ tipo: 'info', mensaje: conductor.nombre + ' aceptó tu viaje. Va en camino...' })
+    // Notificacion 2: taxi llegó (6 segundos)
+    setTimeout(() => {
+      setNotificacion({ tipo: 'alerta', mensaje: conductor.nombre + ' ha llegado a tu ubicacion. Te esta esperando!' })
+    }, 6000)
+    // Fin del viaje (12 segundos)
+    setTimeout(() => {
+      setViajeEnCurso(false)
+      setConductorElegido(null)
+      setNotificacion(null)
       setExitoViaje(true)
       setTimeout(() => setExitoViaje(false), 3000)
-    } catch (e) { console.error(e) }
-    finally { setCargandoViaje(false) }
+    }, 12000)
   }
 
   const handleReservaBlog = async () => {
@@ -149,6 +213,35 @@ export default function ReservaViajePage() {
   if (usuario) return (
     <>
       <Navbar />
+      {/* NOTIFICACION FLOTANTE */}
+      {notificacion && (
+        <div className={`fixed top-20 right-4 z-50 max-w-xs px-4 py-3 rounded-2xl shadow-2xl border flex flex-col gap-3 transition-all ${notificacion.tipo === 'alerta' ? 'bg-yellow text-night border-yellow/50' : 'bg-night border-white/10 text-white'}`}>
+          <div className="flex items-start gap-3">
+            <div className={`w-2 h-2 rounded-full mt-1 shrink-0 ${notificacion.tipo === 'alerta' ? 'bg-night animate-ping' : 'bg-yellow animate-ping'}`} />
+            <p className="text-xs font-bold flex-1">{notificacion.mensaje}</p>
+            <button onClick={() => setNotificacion(null)} className="shrink-0 opacity-50 hover:opacity-100 text-sm font-black">✕</button>
+          </div>
+          {notificacion.tipo === 'alerta' && !enCamino && (
+            <div className="flex gap-2 mt-1">
+              <button
+                onClick={confirmarEnCamino}
+                className="flex-1 bg-night text-yellow text-[10px] font-black py-2 rounded-xl hover:bg-night/80 transition-all"
+              >
+                Voy en camino
+              </button>
+              <button
+                onClick={cancelarViaje}
+                className="flex-1 bg-night/20 text-night text-[10px] font-black py-2 rounded-xl hover:bg-night/30 transition-all border border-night/20"
+              >
+                Cancelar viaje
+              </button>
+            </div>
+          )}
+          {notificacion.tipo === 'alerta' && enCamino && (
+            <p className="text-[10px] font-bold text-night/70 text-center">En camino al vehiculo</p>
+          )}
+        </div>
+      )}
       <main className="bg-night min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
           <div className="px-6 md:px-10 py-10 flex flex-col gap-6">
@@ -212,20 +305,75 @@ export default function ReservaViajePage() {
             <button onClick={handleReservaApp} disabled={!origenVal || !destinoVal || cargandoViaje} className="w-full bg-yellow disabled:bg-yellow/30 disabled:cursor-not-allowed text-night font-black py-4 rounded-xl text-sm uppercase tracking-widest flex items-center justify-center gap-2 transition-all hover:brightness-110">
               {cargandoViaje ? 'Procesando...' : exitoViaje ? 'Viaje solicitado!' : modo === 'ahora' ? 'Solicitar viaje' : 'Programar viaje'}
             </button>
-            {viajes.length > 0 && (
-              <div>
-                <h2 className="text-xs font-black text-gray-500 uppercase tracking-widest mb-3">Mis viajes recientes</h2>
-                <div className="space-y-2">
-                  {viajes.slice(0, 4).map((v, i) => (
-                    <div key={i} className="bg-white/[0.03] border border-white/5 rounded-xl px-4 py-3 flex items-center gap-3">
-                      <LuCar className="text-gray-600 shrink-0" size={14} />
-                      <div className="flex-1 min-w-0"><p className="text-white text-xs font-medium truncate">{v.destino}</p><p className="text-gray-600 text-[10px] truncate">{v.origen}</p></div>
-                      <span className={`text-[10px] font-bold ${ESTADO_COLOR[v.estado] || 'text-gray-400'}`}>{v.estado}</span>
+            {/* PANEL BUSCANDO */}
+            {buscando && (
+              <div className="bg-white/[0.03] border border-yellow/20 rounded-2xl p-4 space-y-3">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-yellow animate-ping" />
+                    <p className="text-yellow text-xs font-bold uppercase tracking-widest">
+                      {mostrarOfertas ? 'Conductores disponibles' : 'Buscando conductores cerca...'}
+                    </p>
+                  </div>
+                  <button onClick={cancelarViaje} className="text-red-400 text-[10px] font-bold uppercase hover:text-red-300 transition-colors border border-red-400/30 px-2 py-1 rounded-lg">
+                    Cancelar
+                  </button>
+                </div>
+                {!mostrarOfertas && (
+                  <div className="space-y-2">
+                    {[1,2,3].map(i => (
+                      <div key={i} className="bg-white/5 rounded-xl px-4 py-3 flex items-center gap-3 animate-pulse">
+                        <div className="w-10 h-10 rounded-full bg-white/10" />
+                        <div className="flex-1 space-y-2">
+                          <div className="h-2 bg-white/10 rounded w-24" />
+                          <div className="h-2 bg-white/5 rounded w-16" />
+                        </div>
+                        <div className="h-4 bg-white/10 rounded w-12" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {mostrarOfertas && conductoresSimulados.map(c => (
+                  <div key={c.id} className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-yellow/10 border border-yellow/20 flex items-center justify-center shrink-0">
+                      <span className="text-yellow font-black text-sm">{c.avatar}</span>
                     </div>
-                  ))}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-white text-xs font-bold">{c.nombre}</p>
+                      <p className="text-gray-500 text-[10px]">{c.auto} · ⭐ {c.calificacion}</p>
+                      <p className="text-gray-500 text-[10px]">Llega en {c.tiempo}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-yellow font-black text-sm">S/ {c.precio}</p>
+                      <button onClick={() => elegirConductor(c)} className="mt-1 bg-yellow text-night text-[10px] font-black px-3 py-1 rounded-lg hover:brightness-110 transition-all">
+                        Elegir
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* PANEL VIAJE EN CURSO */}
+            {viajeEnCurso && conductorElegido && (
+              <div className="bg-green-500/10 border border-green-500/30 rounded-2xl p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <LuCar className="text-green-400" size={16} />
+                  <p className="text-green-400 text-xs font-black uppercase tracking-widest">Conductor en camino</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                    <span className="text-green-400 font-black">{conductorElegido.avatar}</span>
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-sm">{conductorElegido.nombre}</p>
+                    <p className="text-gray-400 text-xs">{conductorElegido.auto}</p>
+                    <p className="text-green-400 text-xs font-bold">Llega en {conductorElegido.tiempo} · S/ {conductorElegido.precio}</p>
+                  </div>
                 </div>
               </div>
             )}
+
           </div>
           <div className="h-[400px] lg:h-auto sticky top-0">
             {isLoaded ? (
@@ -238,6 +386,21 @@ export default function ReservaViajePage() {
                 options={{ disableDoubleClickZoom: true, styles: [{elementType:'geometry',stylers:[{color:'#1a1a2e'}]},{elementType:'labels.text.fill',stylers:[{color:'#746855'}]},{featureType:'road',elementType:'geometry',stylers:[{color:'#38414e'}]},{featureType:'water',elementType:'geometry',stylers:[{color:'#17263c'}]}] }}
               >
                 {directions && <DirectionsRenderer directions={directions} />}
+                {conductoresSimulados.map(c => (
+                  <Marker
+                    key={c.id}
+                    position={{ lat: c.lat, lng: c.lng }}
+                    icon={window.google ? {
+                      path: window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                      scale: 5,
+                      fillColor: '#FFD700',
+                      fillOpacity: 1,
+                      strokeColor: '#000',
+                      strokeWeight: 1,
+                      rotation: Math.random() * 360,
+                    } : undefined}
+                  />
+                ))}
                 {!directions && (
                   <Marker
                     position={miUbicacion}
