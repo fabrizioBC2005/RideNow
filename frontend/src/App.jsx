@@ -17,6 +17,7 @@ import ContactanosPage from './pages/conduce/ContactanosPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import PerfilPage from './pages/PerfilPage'
 import HistorialPage from './pages/HistorialPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/historial" element={<HistorialPage />} />
         {/* <Route path="/mis-viajes" element={<MisViajesPage />} /> */}
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }

@@ -3,6 +3,7 @@
 // ============================================
 import { useState, useEffect } from "react";
 import { viajesApi } from "../api/viajes.api";
+import { useAuth } from "./useAuth";
 
 export function useViajes() {
   const [viajes, setViajes] = useState([]);
@@ -22,7 +23,7 @@ export function useViajes() {
     }
   };
 
-  useEffect(() => { cargar(); }, []);
+  useEffect(() => { if (usuario) cargar(); }, [usuario]);
 
   const crearViaje = async (datos) => {
     const res = await viajesApi.crear(datos);
