@@ -4,6 +4,8 @@ import { useViajes } from "../hooks/useViajes";
 import MapaViaje from '../components/MapaViaje'
 
 import { MapPin, Clock, Star, Shield, ArrowRight, CreditCard } from 'lucide-react'
+import { useAuth } from '../hooks/useAuth'
+import { LuCar, LuNavigation, LuMapPin, LuArrowRight } from 'react-icons/lu'
 
 const TIPOS_VIAJE = [
     { icon: '🚗', nombre: 'RideNow X', desc: 'Económico y rápido', tiempo: '3 min', precio: 'S/ 8–12', popular: false },
@@ -26,8 +28,124 @@ const ZONAS = [
 ]
 
 export default function ViajePage() {
-    const { viajes, cargando, error } = useViajes();
-    const viajeActual = viajes[0];
+    const { usuario } = useAuth()
+    const { viajes, cargando } = useViajes()
+    const viajeActual = viajes[0]
+
+    const ESTADO_COLOR = {
+        pendiente:  { text: 'text-yellow', bg: 'bg-yellow/10', border: 'border-yellow/20' },
+        en_curso:   { text: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20' },
+        completado: { text: 'text-green-400', bg: 'bg-green-400/10', border: 'border-green-400/20' },
+        cancelado:  { text: 'text-red-400', bg: 'bg-red-400/10', border: 'border-red-400/20' },
+    }
+
+    const totalGastado = viajes.reduce((acc, v) => acc + (parseFloat(v.precio) || 0), 0)
+
+    const formatFecha = (fecha) => {
+        if (!fecha) return '--'
+        return new Date(fecha).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
+    }
+
+    if (usuario) return (
+        <>
+            <Navbar />
+            <main className="bg-night min-h-screen px-6 py-10">
+                <div className="max-w-[900px] mx-auto space-y-6">
+
+                    {/* BIENVENIDA */}
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h1 className="text-2xl font-black text-white tracking-tight">Bienvenido, {usuario.nombre?.split(' ')[0]}</h1>
+                            <p className="text-gray-500 text-sm mt-1">¿A donde vas hoy?</p>
+                        </div>
+                        <div className="w-12 h-12 rounded-full bg-yellow/10 border border-yellow/20 flex items-center justify-center">
+                            <span className="text-yellow font-black text-lg">{usuario.nombre?.charAt(0).toUpperCase()}</span>
+                        </div>
+                    </div>
+
+                    {/* ACCION RAPIDA */}
+                    <a href="/reserva" className="block bg-yellow rounded-2xl p-5 no-underline hover:brightness-105 transition-all">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-night font-black text-lg">Pedir un viaje</p>
+                                <p className="text-night/60 text-xs mt-1">Conductores disponibles cerca de ti</p>
+                            </div>
+                            <div className="w-12 h-12 rounded-xl bg-night/10 flex items-center justify-center">
+                                <LuCar className="text-night" size={24} />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-1 mt-4 text-night/70 text-xs font-bold">
+                            <span>Solicitar ahora</span>
+                            <LuArrowRight size={14} />
+                        </div>
+                    </a>
+
+                    {/* STATS */}
+                    <div className="grid grid-cols-3 gap-3">
+                        <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-4 text-center">
+                            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Viajes</p>
+                            <p className="text-white font-black text-xl">{viajes.length}</p>
+                        </div>
+                        <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-4 text-center">
+                            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Completados</p>
+                            <p className="text-green-400 font-black text-xl">{viajes.filter(v => v.estado === 'completado').length}</p>
+                        </div>
+                        <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-4 text-center">
+                            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Gastado</p>
+                            <p className="text-yellow font-black text-xl">S/ {totalGastado.toFixed(0)}</p>
+                        </div>
+                    </div>
+
+                    {/* ULTIMO VIAJE */}
+                    {viajeActual && (
+                        <div>
+                            <h2 className="text-xs font-black text-gray-500 uppercase tracking-widest mb-3">Ultimo viaje</h2>
+                            <div className={"bg-white/[0.03] border rounded-2xl p-4 " + (ESTADO_COLOR[viajeActual.estado]?.border || 'border-white/5')}>
+                                <div className="flex items-start justify-between gap-3 mb-3">
+                                    <span className={"text-[10px] font-black uppercase px-2.5 py-1 rounded-lg " + (ESTADO_COLOR[viajeActual.estado]?.bg || '') + " " + (ESTADO_COLOR[viajeActual.estado]?.text || '')}>
+                                        {viajeActual.estado}
+                                    </span>
+                                    <div className="text-right">
+                                        <p className="text-yellow font-black text-sm">S/ {viajeActual.precio || '--'}</p>
+                                        <p className="text-gray-600 text-[10px]">{formatFecha(viajeActual.creado_en)}</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-1.5">
+                                    <div className="flex items-start gap-2">
+                                        <LuNavigation className="text-yellow shrink-0 mt-0.5" size={12} />
+                                        <p className="text-white text-xs font-medium">{viajeActual.origen}</p>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                        <LuMapPin className="text-red-400 shrink-0 mt-0.5" size={12} />
+                                        <p className="text-white text-xs font-medium">{viajeActual.destino}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* TIPOS DE VIAJE */}
+                    <div>
+                        <h2 className="text-xs font-black text-gray-500 uppercase tracking-widest mb-3">Tipos de viaje disponibles</h2>
+                        <div className="grid grid-cols-3 gap-3">
+                            {TIPOS_VIAJE.map(t => (
+                                <a key={t.nombre} href="/reserva" className={"relative bg-white/[0.03] border rounded-2xl p-4 no-underline hover:bg-white/5 transition-all " + (t.popular ? 'border-yellow/30' : 'border-white/5')}>
+                                    {t.popular && <span className="absolute -top-2 left-4 bg-yellow text-night text-[9px] font-black px-2 py-0.5 rounded-full">Popular</span>}
+                                    <p className="text-2xl mb-2">{t.icon}</p>
+                                    <p className="text-white text-xs font-black">{t.nombre}</p>
+                                    <p className="text-gray-500 text-[10px] mt-0.5">{t.desc}</p>
+                                    <p className="text-yellow text-xs font-bold mt-2">{t.precio}</p>
+                                    <p className="text-gray-600 text-[9px]">{t.tiempo}</p>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+            <Footer />
+        </>
+    )
     return (
         <>
             <Navbar />
@@ -92,19 +210,14 @@ export default function ViajePage() {
                         </p>
                     )}
 
-                    {error && (
-                        <p className="text-red-500">
-                        {error}
-                        </p>
-                    )}
 
-                    {!cargando && !error && !viajeActual && (
+                    {!cargando && !viajeActual && (
                         <div className="bg-gray-100 rounded-xl p-6">
                         No tienes viajes activos.
                         </div>
                     )}
 
-                    {!cargando && !error && viajeActual && (
+                    {!cargando && viajeActual && (
                     <div className="grid md:grid-cols-2 gap-8">
 
                         <div className="bg-night text-white rounded-xl p-6">
