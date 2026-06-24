@@ -5,6 +5,8 @@ import { useViajes } from "../hooks/useViajes"
 import { useAuth } from '../hooks/useAuth'
 import { useJsApiLoader, Autocomplete, GoogleMap, DirectionsRenderer, Marker } from '@react-google-maps/api'
 import { GOOGLE_MAPS_LIBRARIES } from '../config/googleMaps'
+import ModalCalificacion from '../components/ModalCalificacion'
+import ChatViaje from '../components/ChatViaje'
 import { LuNavigation, LuCar, LuCircleCheck, LuCircleX, LuClock, LuCalendar, LuMapPin, LuArrowRight } from 'react-icons/lu'
 import { ArrowRight, Clock, Calendar, MapPin } from 'lucide-react'
 
@@ -41,6 +43,9 @@ export default function ReservaViajePage() {
   const [notificacion, setNotificacion] = useState(null)
   const [viajeActualId, setViajeActualId] = useState(null)
   const [enCamino, setEnCamino] = useState(false)
+  const [mostrarCalificacion, setMostrarCalificacion] = useState(false)
+  const [conductorCalificar, setConductorCalificar] = useState(null)
+  const [mostrarChat, setMostrarChat] = useState(false)
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY,
@@ -190,10 +195,15 @@ export default function ReservaViajePage() {
     // Fin del viaje (12 segundos)
     setTimeout(() => {
       setViajeEnCurso(false)
-      setConductorElegido(null)
       setNotificacion(null)
+      setMostrarChat(false)
       setExitoViaje(true)
-      setTimeout(() => setExitoViaje(false), 3000)
+      setConductorCalificar(conductorElegido)
+      setTimeout(() => {
+        setExitoViaje(false)
+        setMostrarCalificacion(true)
+      }, 1500)
+      setConductorElegido(null)
     }, 12000)
   }
 
@@ -213,6 +223,27 @@ export default function ReservaViajePage() {
   if (usuario) return (
     <>
       <Navbar />
+      {mostrarChat && (
+        <ChatViaje viajeId={null} onClose={() => setMostrarChat(false)} />
+      )}
+
+      {mostrarCalificacion && (
+        <ModalCalificacion
+          viaje={null}
+          conductor={conductorCalificar ? { nombre: conductorCalificar.nombre, vehiculo: conductorCalificar.auto } : null}
+          onClose={() => setMostrarCalificacion(false)}
+        />
+      )}
+
+      {viajeEnCurso && (
+        <button
+          onClick={() => setMostrarChat(true)}
+          className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-yellow shadow-2xl shadow-yellow/20 flex items-center justify-center hover:brightness-110 transition-all"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+      )}
+
       {/* NOTIFICACION FLOTANTE */}
       {notificacion && (
         <div className={`fixed top-20 right-4 z-50 max-w-xs px-4 py-3 rounded-2xl shadow-2xl border flex flex-col gap-3 transition-all ${notificacion.tipo === 'alerta' ? 'bg-yellow text-night border-yellow/50' : 'bg-night border-white/10 text-white'}`}>
