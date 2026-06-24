@@ -6,6 +6,7 @@ import { viajesApi } from "../api/viajes.api";
 import { useAuth } from "./useAuth";
 
 export function useViajes() {
+  const { usuario } = useAuth()
   const [viajes, setViajes] = useState([]);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState(null);

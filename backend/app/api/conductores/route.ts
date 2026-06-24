@@ -1,6 +1,7 @@
 ﻿import { NextRequest } from "next/server";
 import pool from "../../../lib/db";
 import { ok, error } from "../../../lib/response";
+import { hashPassword } from "../../../lib/auth";
 import crypto from "node:crypto";
 
 function idGenerate(longitud = 11): string {
@@ -38,11 +39,12 @@ export async function POST(req: NextRequest) {
     }
     await connection.beginTransaction();
     const nuevoUsuarioId = idGenerate(11);
-    const nuevoConductorId = idGenerate(11); 
+    const nuevoConductorId = idGenerate(11);
+    const hashedPassword = await hashPassword(password); 
     await connection.query(
       `INSERT INTO usuarios (id, nombre, dni, email, password, telefono, direccion, rol) 
        VALUES (?, ?, ?, ?, ?, ?, ?, 'conductor')`,
-      [nuevoUsuarioId, nombre, direccion.replace("DNI: ", ""), email, password, telefono || null, direccion || null]
+      [nuevoUsuarioId, nombre, direccion.replace("DNI: ", ""), email, hashedPassword, telefono || null, direccion || null]
     );
     await connection.query(
       `INSERT INTO conductores (id, usuario_id, licencia, vehiculo, placa) 

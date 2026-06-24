@@ -2,6 +2,7 @@
 //  RideNow â€” Contexto global de autenticaciÃ³n
 // ============================================
 import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { authApi } from "../api/auth.api";
 
 export const AuthContext = createContext(null);

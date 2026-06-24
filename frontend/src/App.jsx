@@ -18,6 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import PerfilPage from './pages/PerfilPage'
 import HistorialPage from './pages/HistorialPage'
 import NotFoundPage from './pages/NotFoundPage'
+import ConductorPanel from './pages/conductor/ConductorPanel'
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/historial" element={<HistorialPage />} />
         {/* <Route path="/mis-viajes" element={<MisViajesPage />} /> */}
       </Route>
+      <Route path="/conductor/panel" element={<ConductorPanel />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

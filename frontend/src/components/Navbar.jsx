@@ -44,12 +44,15 @@ export default function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            {TOP_LINKS.map(l => (
-              <Link key={l.label} to={l.href}
-                className="text-gray-400 text-sm font-medium no-underline hover:text-yellow transition-colors">
-                {l.label}
-              </Link>
-            ))}
+            {usuario?.rol === 'conductor' ? (
+              <Link to="/conductor/panel" className="text-gray-400 text-sm font-medium no-underline hover:text-yellow transition-colors">Mi panel</Link>
+            ) : (
+              TOP_LINKS.map(l => (
+                <Link key={l.label} to={l.href} className="text-gray-400 text-sm font-medium no-underline hover:text-yellow transition-colors">
+                  {l.label}
+                </Link>
+              ))
+            )}
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
@@ -67,12 +70,19 @@ export default function Navbar() {
                 </button>
                 {dropdownOpen && (
                   <div className="absolute right-0 top-10 bg-[#0a0a0a] border border-white/10 rounded-2xl py-2 w-44 shadow-2xl z-50">
+                    {usuario.rol === 'conductor' && (
+                      <Link to="/conductor/panel" onClick={() => setDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-yellow text-xs font-bold no-underline hover:bg-white/5 transition-all">
+                        Mi panel
+                      </Link>
+                    )}
                     <Link to="/perfil" onClick={() => setDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-gray-300 text-xs font-bold no-underline hover:text-yellow hover:bg-white/5 transition-all">
                       Mi perfil
                     </Link>
-                    <Link to="/historial" onClick={() => setDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-gray-300 text-xs font-bold no-underline hover:text-yellow hover:bg-white/5 transition-all">
-                      Mis viajes
-                    </Link>
+                    {usuario.rol !== 'conductor' && (
+                      <Link to="/historial" onClick={() => setDropdownOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-gray-300 text-xs font-bold no-underline hover:text-yellow hover:bg-white/5 transition-all">
+                        Mis viajes
+                      </Link>
+                    )}
                     <div className="border-t border-white/5 my-1" />
                     <button onClick={() => { logout(); setDropdownOpen(false) }} className="w-full text-left flex items-center gap-2 px-4 py-2.5 text-red-400 text-xs font-bold hover:bg-white/5 transition-all">
                       Cerrar sesion
