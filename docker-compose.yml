@@ -1,0 +1,40 @@
+﻿version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ridenow_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 2525
+      MYSQL_DATABASE: ridenow
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  backend:
+    build: ./backend
+    container_name: ridenow_backend
+    ports:
+      - '3000:3000'
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 2525
+      DB_NAME: ridenow
+      JWT_SECRET: ridenow_secret_key_123
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./frontend
+    container_name: ridenow_frontend
+    ports:
+      - '8080:80'
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
